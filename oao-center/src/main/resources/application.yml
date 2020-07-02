@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: oao-center
+server:
+  port: 10100 #Æô¶¯¶Ë¿Ú
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    enable-self-preservation: false
+logging:
+  file:
+    name: log/${spring.application.name}/${spring.application.name}
