@@ -1,0 +1,42 @@
+server:
+  port: 10100
+#微服务接入配置
+spring:
+  application:
+    name: oao-gateway
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: oao
+        weight: 1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+---
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #无视大小写
+          lower-case-service-id: true
+      routes:
+        - id: user
+          uri: lb:http://oao-user
+          predicates:
+            - Path=/api/user/**
+---
+logging:
+  level:
+    com.liyu: debug
+  file:
+    name: log/${spring.application.name}/${spring.application.name}

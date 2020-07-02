@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.0.RELEASE</version>
+    <version>2.2.5.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.liyu</groupId>
@@ -15,7 +15,8 @@
 
   <properties>
     <java.version>1.8</java.version>
-    <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
+    <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+    <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
@@ -29,17 +30,60 @@
 
   <modules>
     <module>oao-common</module>
+    <module>oao-starter</module>
+    <module>oao-api</module>
+    <module>oao-center</module>
+    <module>oao-gateway</module>
+    <module>oao-user</module>
+    <module>oao-uaa</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
       <!--内部引用 begin-->
       <dependency>
-        <groupId>com.liyu</groupId>
-        <artifactId>oao-common-core</artifactId>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-web</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-webflux</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-cloud</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-security</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!--内部引用 end-->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
@@ -98,11 +142,10 @@
         <version>2.9.2</version>
       </dependency>
       <dependency>
-        <groupId>dom4j</groupId>
-        <artifactId>dom4j</artifactId>
-        <version>1.6.1</version>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
