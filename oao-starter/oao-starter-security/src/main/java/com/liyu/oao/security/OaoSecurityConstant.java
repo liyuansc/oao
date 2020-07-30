@@ -3,6 +3,12 @@ package com.liyu.oao.security;
 public class OaoSecurityConstant {
     public static class HttpHeader {
         public final static String ACCESS_TOKEN = "X-ACCESS-TOKEN";
+
+        public final static String I = "INTERNAL-";
+
+        public final static String I_USERNAME = I + "USERNAME";
+        public final static String I_USER_ID = I + "USER_ID";
+        public final static String I_AUTHORITIES = I + "AUTHORITIES";
     }
 
     public static class QueryParam {

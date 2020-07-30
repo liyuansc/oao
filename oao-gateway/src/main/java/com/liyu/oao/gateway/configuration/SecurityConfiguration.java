@@ -1,16 +1,23 @@
 package com.liyu.oao.gateway.configuration;
 
+import com.liyu.oao.gateway.security.OaoAuthenticationSuccessHandler;
+import com.liyu.oao.gateway.security.OaoOauth2AuthenticationManager;
 import com.liyu.oao.gateway.security.OaoTokenAuthenticationConverter;
-import com.liyu.oao.gateway.security.OaoTokenAuthenticationManager;
 import com.liyu.oao.security.JwtTokenManage;
+import com.liyu.oao.security.OaoUserAuthenticationConvert;
 import com.liyu.oao.webflux.security.OaoServerAccessDeniedHandler;
 import com.liyu.oao.webflux.security.OaoServerAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
@@ -22,8 +29,8 @@ import org.springframework.security.web.server.authorization.ServerAccessDeniedH
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
     @Bean
-    public OaoTokenAuthenticationManager oaoTokenAuthenticationManager() {
-        return new OaoTokenAuthenticationManager();
+    public ReactiveAuthenticationManager authenticationManager() {
+        return new OaoOauth2AuthenticationManager(tokenStore());
     }
 
     @Bean
@@ -49,10 +56,12 @@ public class SecurityConfiguration {
 
         ServerAuthenticationEntryPoint authenticationEntryPoint = serverAuthenticationEntryPoint();
 
-        AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(oaoTokenAuthenticationManager());
+        AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(authenticationManager());
         authenticationWebFilter.setServerAuthenticationConverter(tokenAuthenticationConverter);
 //        authenticationWebFilter.setAuthenticationSuccessHandler();
         authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(authenticationEntryPoint));
+        authenticationWebFilter.setAuthenticationSuccessHandler(new OaoAuthenticationSuccessHandler());
+
 
         http.addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         return http
@@ -70,7 +79,9 @@ public class SecurityConfiguration {
 
 //                .and()
                 .authorizeExchange()
+                .pathMatchers("/api/uaa/auth/login").permitAll()
                 .anyExchange().authenticated()
+
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(serverAccessDeniedHandler())
@@ -133,4 +144,20 @@ public class SecurityConfiguration {
 //
 ////            http.addFilterBefore(new JwtAuthenticationTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 //    }
+
+
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("123e131421412");
+        DefaultAccessTokenConverter ac = new DefaultAccessTokenConverter();
+        ac.setUserTokenConverter(new OaoUserAuthenticationConvert());
+        converter.setAccessTokenConverter(ac);
+        return converter;
+    }
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(accessTokenConverter());
+    }
 }

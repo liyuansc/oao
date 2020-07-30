@@ -3,6 +3,7 @@ package com.liyu.oao.common.model;
 
 import com.liyu.oao.common.constant.CurrentApp;
 import com.liyu.oao.common.constant.ResultCode;
+import com.liyu.oao.common.exception.ResultException;
 
 /**
  * Created by liyu on 2018/1/19.
@@ -45,6 +46,13 @@ public class Result<T> {
 
     public static <T> Result<T> failed(T data) {
         return ResultCode.R1000.build(data);
+    }
+
+    public Result<T> check() {
+        if (!ResultCode.R200.code().equals(this.code)) {
+            throw new ResultException(this);
+        }
+        return this;
     }
 
 

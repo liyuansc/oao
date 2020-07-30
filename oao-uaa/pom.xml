@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
-      <artifactId>oao-starter-web</artifactId>
+      <artifactId>oao-starter-web-security</artifactId>
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
@@ -37,7 +37,15 @@
       <groupId>com.liyu</groupId>
       <artifactId>oao-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
     <!--内部引用 end-->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>

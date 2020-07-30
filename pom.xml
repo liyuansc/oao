@@ -36,6 +36,7 @@
     <module>oao-gateway</module>
     <module>oao-user</module>
     <module>oao-uaa</module>
+    <module>oao-id</module>
   </modules>
 
   <dependencyManagement>
@@ -58,7 +59,17 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-web-security</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>oao-starter-webflux</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>oao-starter-webflux-security</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

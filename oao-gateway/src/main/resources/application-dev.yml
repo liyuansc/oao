@@ -13,6 +13,23 @@ spring:
         server-addr: 127.0.0.1:8848
         group: oao
         weight: 1
+    gateway:
+      default-filters:
+        - name: CircuitBreaker
+          args:
+            name: all
+            fallbackUri: forward:/fallback
+#        - name: Hystrix
+#          args:
+#            name: fallbackcmd
+#            fallbackUri: forward:/fallback
+#        - name: Retry #目前版本spring-gateway的retry配合负载均衡的还有小bug（总会尝试失败的实例，先不用）
+#          args:
+#            retries: 1
+#            series: SERVER_ERROR
+#            methods:
+#              - GET
+#              - POST
 management:
   endpoints:
     web:
@@ -34,9 +51,21 @@ spring:
           uri: lb:http://oao-user
           predicates:
             - Path=/api/user/**
+        - id: uaa
+          uri: lb:http://oao-uaa
+          predicates:
+            - Path=/api/uaa/**
+          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: slow_flux
+#                fallbackUri: forward:/fallback
+
 ---
 logging:
   level:
     com.liyu: debug
   file:
     name: log/${spring.application.name}/${spring.application.name}
+---
+spring.cloud.circuitbreaker.sentinel.enabled: true

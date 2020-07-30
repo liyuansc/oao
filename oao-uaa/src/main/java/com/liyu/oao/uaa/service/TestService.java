@@ -8,7 +8,7 @@ import java.time.Duration;
 
 @Service
 public class TestService {
-    private Cache<String, String> testCache;
+    private final Cache<String, String> testCache;
 
     {
         testCache = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(4)).build();

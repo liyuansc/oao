@@ -22,7 +22,9 @@ class App extends Component {
   }
 
   login = async (values) => {
-    login(values.username, values.password, values.rememberMe).then(res => {
+    console.log(values)
+
+    login(values.username, values.password, values.remember).then(res => {
       console.log(res)
     }).catch(e => {
       console.log(e)
@@ -68,7 +70,7 @@ class App extends Component {
             />
           </Form.Item>
           <Form.Item>
-            <Form.Item name="rememberMe" valuePropName="checked" noStyle>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
 

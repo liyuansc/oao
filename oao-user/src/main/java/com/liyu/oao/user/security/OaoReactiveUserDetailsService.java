@@ -18,6 +18,6 @@ public class OaoReactiveUserDetailsService implements ReactiveUserDetailsService
     public Mono<UserDetails> findByUsername(String username) {
         return userService.findByUsernameMono(username)
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException(username)))
-                .map(user -> new OaoUserDetails(user.getUsername(), user.getPassword()));
+                .map(user -> new OaoUserDetails(user.getId(), user.getUsername(), user.getPassword()));
     }
 }

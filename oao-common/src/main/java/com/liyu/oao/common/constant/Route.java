@@ -5,5 +5,6 @@ public class Route {
 
     public final static String USER = API_PREFIX + "/user";
     public final static String UAA = API_PREFIX + "/uaa";
+    public final static String ID = API_PREFIX + "/id";
 
 }

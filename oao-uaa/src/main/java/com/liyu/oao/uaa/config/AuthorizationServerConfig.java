@@ -1,6 +1,7 @@
-package com.liyu.oao.uaa.configuration;
+package com.liyu.oao.uaa.config;
 
 import com.liyu.oao.security.OaoSecurityConstant;
+import com.liyu.oao.security.OaoUserAuthenticationConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -30,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableAuthorizationServer
 @AutoConfigureAfter({AuthorizationServerEndpointsConfigurer.class})
-public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     /**
      * 注入authenticationManager 来支持 password grant type
      */
@@ -62,6 +64,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("123e131421412");
+        DefaultAccessTokenConverter ac = new DefaultAccessTokenConverter();
+        ac.setUserTokenConverter(new OaoUserAuthenticationConvert());
+        converter.setAccessTokenConverter(ac);
         return converter;
     }
 
@@ -81,7 +86,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("web")
                 .secret("123456")
-                .accessTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(12))
+                .accessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(12))
                 .authorizedGrantTypes(OaoSecurityConstant.GrantType.AUTHORIZATION_CODE, OaoSecurityConstant.GrantType.CLIENT_CREDENTIALS)
                 .redirectUris("http://www.baidu.com")
                 .scopes("all")

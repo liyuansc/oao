@@ -20,6 +20,6 @@ public class OaoUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new OaoUserDetails(user.getUsername(), user.getPassword());
+        return new OaoUserDetails(user.getId(), user.getUsername(), user.getPassword());
     }
 }

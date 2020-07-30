@@ -1,4 +1,4 @@
-package com.liyu.oao.uaa.configuration;
+package com.liyu.oao.uaa.config;
 
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import static com.liyu.oao.uaa.configuration.MybatisPlusConfiguration.MAPPER_LOCATION;
+import static com.liyu.oao.uaa.config.MybatisPlusConfig.MAPPER_LOCATION;
 
 /**
  * Created by liyu on 2020/2/20
@@ -18,7 +18,7 @@ import static com.liyu.oao.uaa.configuration.MybatisPlusConfiguration.MAPPER_LOC
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = MAPPER_LOCATION)
-public class MybatisPlusConfiguration {
+public class MybatisPlusConfig {
     public final static String MAPPER_LOCATION = "com.liyu.oao.**.dao";
 
     @Bean
@@ -34,7 +34,7 @@ public class MybatisPlusConfiguration {
     }
 
     @Bean
-    public DateMetaObjectHandler staffMetaObjectHandler() {
+    public DateMetaObjectHandler dateMetaObjectHandler() {
         return new DateMetaObjectHandler();
     }
 

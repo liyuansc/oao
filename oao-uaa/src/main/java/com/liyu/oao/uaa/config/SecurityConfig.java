@@ -1,4 +1,4 @@
-package com.liyu.oao.uaa.configuration;
+package com.liyu.oao.uaa.config;
 
 import com.liyu.oao.security.JwtTokenManage;
 import com.liyu.oao.uaa.security.OaoUserDetailsService;
@@ -20,7 +20,7 @@ import org.springframework.web.cors.CorsUtils;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private OaoUserDetailsService userDetailsService;
 
@@ -48,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         http
                 .csrf().disable()
 

@@ -7,15 +7,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class OaoUserDetails implements UserDetails {
+    private String id;
     private String username;
     private String password;
 
     public OaoUserDetails() {
     }
 
+    public OaoUserDetails(String username) {
+        this.username = username;
+    }
+
     public OaoUserDetails(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public OaoUserDetails(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

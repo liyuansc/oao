@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.liyu.oao.uaa.configuration;
+package com.liyu.oao.uaa.config;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>
  */
 @Configuration
-public class SentinelConfiguration {
+public class SentinelConfig {
 
 //    @Bean
 //    public BlockRequestHandler blockRequestHandler() {
