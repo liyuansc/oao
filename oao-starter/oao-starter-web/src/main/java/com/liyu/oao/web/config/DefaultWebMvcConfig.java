@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class WebAutoConfig implements WebMvcConfigurer {
+public class DefaultWebMvcConfig implements WebMvcConfigurer {
     @Autowired(required = false)
     private IUserClient userClient;
 

@@ -29,11 +29,11 @@ import java.util.stream.Stream;
  * Created by liyu on 2018/8/9.
  */
 @EnableCaching
-public class CacheAutoConfig {
+public class DefaultCacheConfig {
     @Autowired(required = false)
     private List<ICacheUnit> cacheUnits = Collections.emptyList();
 
-    private Logger logger = LoggerFactory.getLogger(CacheAutoConfig.class);
+    private Logger logger = LoggerFactory.getLogger(DefaultCacheConfig.class);
 
     {
         ParserConfig.getGlobalInstance().addAccept("com.liyu.oao");

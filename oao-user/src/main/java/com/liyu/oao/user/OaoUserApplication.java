@@ -1,9 +1,9 @@
 package com.liyu.oao.user;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.liyu.oao.common.constant.CurrentApp;
 import com.liyu.oao.common.model.App;
-import com.liyu.oao.redis.cache.config.CacheAutoConfig;
+import com.liyu.oao.redis.cache.config.DefaultCacheConfig;
+import com.liyu.oao.web.config.DefaultWebMvcConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import(CacheAutoConfig.class)
+@Import({DefaultCacheConfig.class, DefaultWebMvcConfig.class})
 public class OaoUserApplication {
 
     static {
