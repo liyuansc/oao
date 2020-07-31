@@ -27,6 +27,10 @@
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
+      <artifactId>oao-starter-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.liyu</groupId>
       <artifactId>oao-starter-cloud</artifactId>
     </dependency>
     <dependency>

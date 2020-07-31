@@ -21,10 +21,10 @@ spring:
     readOnly: false
     maxLifetime: 600000
   redis:
-    hostName: 59.41.16.115
-    database: 4
-    password: ztRedis*&*66
-    port: 6698
+    hostName: 127.0.0.1
+    database: 1
+    password:
+    port: 6379
     timeout: 10000
     pool-config:
       maxIdle: 24

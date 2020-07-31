@@ -1,5 +1,6 @@
 package com.liyu.oao.uaa;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.liyu.oao.common.constant.CurrentApp;
 import com.liyu.oao.common.model.App;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class OaoUaaApplication {
 
     static {
+        ParserConfig.getGlobalInstance().addAccept("com.liyu.oao");
         CurrentApp.setAppId(App.ID.UAA);
     }
 

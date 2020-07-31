@@ -13,7 +13,9 @@
 
   <modules>
     <module>oao-starter-core</module>
+    <module>oao-starter-redis</module>
     <module>oao-starter-webflux</module>
+    <module>oao-starter-webflux-security</module>
     <module>oao-starter-web</module>
     <module>oao-starter-web-security</module>
     <module>oao-starter-cloud</module>

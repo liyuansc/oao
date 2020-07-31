@@ -2,14 +2,12 @@ package com.liyu.oao.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.liyu.oao.user.constant.BeanName;
+import com.liyu.oao.user.cache.unit.impl.FindUserByUserNameUnit;
 import com.liyu.oao.user.dao.UserDao;
 import com.liyu.oao.user.model.po.User;
 import com.liyu.oao.user.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import reactor.core.scheduler.Scheduler;
 
 /**
  * <p>
@@ -21,11 +19,9 @@ import reactor.core.scheduler.Scheduler;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUserService {
-    @Autowired
-    @Qualifier(BeanName.DB_SCHEDULER)
-    private Scheduler scheduler;
-    
+
     @Override
+    @Cacheable(cacheNames = FindUserByUserNameUnit.NAME, key = "#p0")
     public User findByUsername(String username) {
         return super.getOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username));
     }
