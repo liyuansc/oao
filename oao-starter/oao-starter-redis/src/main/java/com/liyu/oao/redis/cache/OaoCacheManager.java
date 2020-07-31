@@ -19,7 +19,6 @@ public class OaoCacheManager extends RedisCacheManager {
     private Map<String, ICacheUnit> cacheNameConfigMap;
     private Map<String, RedisCacheConfiguration> initialCacheConfigurations;
 
-
     OaoCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations, Map<String, ICacheUnit> cacheNameConfigMap) {
         super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations);
         this.cacheNameConfigMap = cacheNameConfigMap;
