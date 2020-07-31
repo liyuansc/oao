@@ -1,12 +1,11 @@
 package com.liyu.oao.user.cache.unit.impl;
 
-import com.liyu.oao.common.model.App;
 import com.liyu.oao.redis.cache.unit.ICacheUnit;
 
 import java.time.Duration;
 
 public class FindUserByUserNameUnit implements ICacheUnit {
-    public final static String NAME = App.ID.USER + ":username";
+    public final static String NAME = "user:username";
 
     @Override
     public String name() {
