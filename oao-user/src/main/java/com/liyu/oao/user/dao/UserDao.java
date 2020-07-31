@@ -1,11 +1,11 @@
 package com.liyu.oao.user.dao;
 
-import com.liyu.oao.user.model.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.liyu.oao.user.model.po.User;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author liyu

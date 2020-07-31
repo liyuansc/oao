@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class OaoGatewayApplication {
 
     static {
-        CurrentApp.setAppId(App.Id.GATEWAY);
+        CurrentApp.setAppId(App.ID.GATEWAY);
     }
 
     public static void main(String[] args) {

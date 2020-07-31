@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class OaoUaaApplication {
 
     static {
-        CurrentApp.setAppId(App.Id.UAA);
+        CurrentApp.setAppId(App.ID.UAA);
     }
 
     public static void main(String[] args) {

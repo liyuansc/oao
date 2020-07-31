@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.liyu.oao.common.model.SuperPojo;
+import com.liyu.oao.common.model.SuperPo;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class CodeGenerator {
         pc.setParent("com.liyu.oao");
         pc.setXml("dao");
         pc.setMapper("dao");
-        pc.setEntity("model.pojo");
+        pc.setEntity("model.po");
 
         mpg.setPackageInfo(pc);
 
@@ -126,7 +126,7 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass(SuperPojo.class);
+        strategy.setSuperEntityClass(SuperPo.class);
 //        strategy.setSuperEntityColumns("id", "createTime", "updateTime");
 //        strategy.setSuperEntityColumns();
 //        strategy.setSuperEntityColumns();

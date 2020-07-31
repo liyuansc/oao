@@ -1,7 +1,7 @@
 package com.liyu.oao.gateway.security;
 
 import com.liyu.oao.security.OaoBearerTokenAuthenticationToken;
-import com.liyu.oao.security.OaoSecurityConstant;
+import com.liyu.oao.common.constant.OaoSecurityConstant;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;

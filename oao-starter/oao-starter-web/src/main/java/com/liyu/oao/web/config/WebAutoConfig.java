@@ -2,15 +2,29 @@ package com.liyu.oao.web.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.liyu.oao.user.feign.IUserClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WebAutoConfig {
+@Configuration
+public class WebAutoConfig implements WebMvcConfigurer {
+    @Autowired(required = false)
+    private IUserClient userClient;
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginArgumentResolver(userClient));
+    }
+
     @Bean
     @ConditionalOnMissingBean
     public HttpMessageConverters fastJsonHttpMessageConverters() {

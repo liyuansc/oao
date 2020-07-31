@@ -18,6 +18,10 @@
       <artifactId>oao-starter-core</artifactId>
     </dependency>
     <!--内部引用 end-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

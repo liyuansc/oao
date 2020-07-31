@@ -15,10 +15,10 @@ spring:
         weight: 1
     gateway:
       default-filters:
-        - name: CircuitBreaker
-          args:
-            name: all
-            fallbackUri: forward:/fallback
+#        - name: CircuitBreaker
+#          args:
+#            name: all
+#            fallbackUri: forward:/fallback
 #        - name: Hystrix
 #          args:
 #            name: fallbackcmd

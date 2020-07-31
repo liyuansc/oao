@@ -1,6 +1,6 @@
 package com.liyu.oao.uaa.dao;
 
-import com.liyu.oao.user.model.pojo.User;
+import com.liyu.oao.user.model.po.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

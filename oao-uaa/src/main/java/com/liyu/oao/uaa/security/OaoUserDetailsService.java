@@ -1,8 +1,8 @@
 package com.liyu.oao.uaa.security;
 
 import com.liyu.oao.security.OaoUserDetails;
-import com.liyu.oao.uaa.service.IUserService;
-import com.liyu.oao.user.model.pojo.User;
+import com.liyu.oao.user.feign.IUserClient;
+import com.liyu.oao.user.model.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class OaoUserDetailsService implements UserDetailsService {
     @Autowired
-    private IUserService userService;
+    private IUserClient userClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
+        User user = userClient.findUserByUsername(username).check().getData();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

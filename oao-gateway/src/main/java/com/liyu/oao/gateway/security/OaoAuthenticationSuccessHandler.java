@@ -1,6 +1,6 @@
 package com.liyu.oao.gateway.security;
 
-import com.liyu.oao.security.OaoSecurityConstant;
+import com.liyu.oao.common.constant.OaoSecurityConstant;
 import com.liyu.oao.security.OaoUserDetails;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;

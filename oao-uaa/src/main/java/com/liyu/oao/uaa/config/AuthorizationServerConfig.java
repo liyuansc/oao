@@ -1,6 +1,6 @@
 package com.liyu.oao.uaa.config;
 
-import com.liyu.oao.security.OaoSecurityConstant;
+import com.liyu.oao.common.constant.OaoSecurityConstant;
 import com.liyu.oao.security.OaoUserAuthenticationConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

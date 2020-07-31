@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liyu.oao.user.constant.BeanName;
 import com.liyu.oao.user.dao.UserDao;
-import com.liyu.oao.user.model.pojo.User;
+import com.liyu.oao.user.model.po.User;
 import com.liyu.oao.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
 /**
@@ -25,12 +24,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements IUser
     @Autowired
     @Qualifier(BeanName.DB_SCHEDULER)
     private Scheduler scheduler;
-
-
+    
     @Override
-    public Mono<User> findByUsernameMono(String username) {
-        return Mono
-                .fromSupplier(() -> super.getOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username)))
-                .subscribeOn(scheduler);
+    public User findByUsername(String username) {
+        return super.getOne(new QueryWrapper<User>().lambda().eq(User::getUsername, username));
     }
 }
