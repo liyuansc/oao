@@ -22,7 +22,7 @@ public class UserClientFallbackFactory implements FallbackFactory<IUserClient> {
     public IUserClient create(Throwable cause) {
         return new IUserClient() {
             @Override
-            public User findUserByUsername(String username) {
+            public User findByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
         };

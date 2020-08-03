@@ -18,7 +18,7 @@ public class UserClientImpl implements IUserClient {
 
     @Override
     @GetMapping("/username/{username}")
-    public User findUserByUsername(@PathVariable String username) {
+    public User findByUsername(@PathVariable String username) {
         return userService.findByUsername(username);
     }
 }

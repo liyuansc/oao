@@ -16,7 +16,7 @@ public class OaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userClient.findUserByUsername(username).check().getData();
+        User user = userClient.findByUsername(username).check().getData();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

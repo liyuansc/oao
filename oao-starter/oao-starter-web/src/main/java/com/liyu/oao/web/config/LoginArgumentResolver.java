@@ -70,7 +70,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             loginUser.setUsername(username);
             loginUser.setClientId(clientId);
             if (isFull && userClient != null) {
-                User user = userClient.findUserByUsername(username);
+                User user = userClient.findByUsername(username);
                 loginUser.setUser(user);
             }
         }

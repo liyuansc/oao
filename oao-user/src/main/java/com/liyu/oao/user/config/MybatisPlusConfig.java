@@ -2,16 +2,19 @@ package com.liyu.oao.user.config;
 
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.liyu.oao.db.DateMetaObjectHandler;
-import com.liyu.oao.user.constant.BeanName;
+import com.liyu.oao.db.OaoTenantHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.liyu.oao.user.config.MybatisPlusConfig.MAPPER_LOCATION;
 
@@ -24,12 +27,6 @@ import static com.liyu.oao.user.config.MybatisPlusConfig.MAPPER_LOCATION;
 public class MybatisPlusConfig {
     public final static String MAPPER_LOCATION = "com.liyu.oao.**.dao";
 
-    @Bean(BeanName.DB_SCHEDULER)
-    public Scheduler scheduler() {
-        return Schedulers.newElastic("db-scheduler");
-    }
-
-
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
@@ -39,6 +36,11 @@ public class MybatisPlusConfig {
         // paginationInterceptor.setLimit(500);
         // 开启 count 的 join 优化,只针对部分 left join
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
+        List<ISqlParser> sqlParserList = new ArrayList<>();
+        TenantSqlParser tenantSqlParser = new TenantSqlParser();
+        tenantSqlParser.setTenantHandler(new OaoTenantHandler());
+        sqlParserList.add(tenantSqlParser);
+        paginationInterceptor.setSqlParserList(sqlParserList);
         return paginationInterceptor;
     }
 
