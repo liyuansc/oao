@@ -1,6 +1,7 @@
 package com.liyu.oao.user.feign;
 
 import com.liyu.oao.common.constant.ResultCode;
+import com.liyu.oao.common.exception.InternalApiException;
 import com.liyu.oao.common.model.App;
 import com.liyu.oao.common.model.Result;
 import com.liyu.oao.user.model.po.User;
@@ -13,16 +14,16 @@ import org.slf4j.LoggerFactory;
  */
 public class UserClientFallbackFactory implements FallbackFactory<IUserClient> {
     private Logger logger = LoggerFactory.getLogger(UserClientFallbackFactory.class);
+    private final String CLIENT_SERVICE_NAME = App.ID.USER;
     private final Integer CODE = ResultCode.R1001.code();
     private final String MSG = ResultCode.R1001.msg();
-    private final String CLIENT_SERVICE_NAME = App.ID.USER;
 
     @Override
     public IUserClient create(Throwable cause) {
         return new IUserClient() {
             @Override
-            public Result<User> findUserByUsername(String username) {
-                return res(cause);
+            public User findUserByUsername(String username) {
+                throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
         };
     }

@@ -7,8 +7,9 @@ public class OaoSecurityConstant {
         public final static String I = "INTERNAL-";
 
         public final static String I_USERNAME = I + "USERNAME";
-        public final static String I_USER_ID = I + "USER_ID";
+        public final static String I_USER_ID = I + "USER-ID";
         public final static String I_AUTHORITIES = I + "AUTHORITIES";
+        public final static String I_CLIENT_ID = I + "I-CLIENT-ID";
     }
 
     public static class QueryParam {

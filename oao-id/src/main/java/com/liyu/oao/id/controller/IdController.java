@@ -9,7 +9,7 @@ import xyz.downgoon.snowflake.Snowflake;
 
 @RestController
 @RequestMapping(Route.ID)
-public class LoginController {
+public class IdController {
     private final static Snowflake snowflake = new Snowflake(1, 1);
 
     @GetMapping("/next")

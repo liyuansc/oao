@@ -23,7 +23,7 @@ spring:
   redis:
     hostName: 127.0.0.1
     database: 1
-    password:
+    password: 123456
     port: 6379
     timeout: 10000
     pool-config:

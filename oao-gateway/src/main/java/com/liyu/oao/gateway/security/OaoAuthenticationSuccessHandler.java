@@ -5,6 +5,8 @@ import com.liyu.oao.security.OaoUserDetails;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.web.server.ServerWebExchange;
@@ -36,6 +38,11 @@ public class OaoAuthenticationSuccessHandler implements ServerAuthenticationSucc
                 OaoUserDetails oaoUserDetails = (OaoUserDetails) userDetails;
                 rb.header(OaoSecurityConstant.HttpHeader.I_USER_ID, oaoUserDetails.getId());
             }
+        }
+        if (authentication instanceof OAuth2Authentication) {
+            OAuth2Request oAuth2Request = ((OAuth2Authentication) authentication).getOAuth2Request();
+            String clientId = oAuth2Request.getClientId();
+            rb.header(OaoSecurityConstant.HttpHeader.I_CLIENT_ID, clientId);
         }
         String as = authentication.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.joining(","));
         rb.header(OaoSecurityConstant.HttpHeader.I_AUTHORITIES, as);

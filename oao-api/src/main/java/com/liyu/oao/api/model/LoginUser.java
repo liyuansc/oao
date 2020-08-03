@@ -11,6 +11,7 @@ public class LoginUser {
     private String username;
     private User user;
     private List<Role> roles;
+    private String clientId;
 
     public boolean isLogin() {
         return login;
@@ -50,5 +51,13 @@ public class LoginUser {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

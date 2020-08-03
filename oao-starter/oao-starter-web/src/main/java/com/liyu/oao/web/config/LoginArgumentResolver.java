@@ -58,24 +58,22 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         Login login = methodParameter.getParameterAnnotation(Login.class);
         boolean isFull = login.isFull();
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
         String username = request.getHeader(OaoSecurityConstant.HttpHeader.I_USERNAME);
         LoginUser loginUser = new LoginUser();
         if (StringUtils.isEmpty(username)) {
             loginUser.setLogin(false);
         } else {
+            String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
+            String clientId = request.getHeader(OaoSecurityConstant.HttpHeader.I_CLIENT_ID);
             loginUser.setLogin(true);
             loginUser.setUserId(userId);
             loginUser.setUsername(username);
+            loginUser.setClientId(clientId);
             if (isFull && userClient != null) {
-                User user = this.findUserByUsername(username);
+                User user = userClient.findUserByUsername(username);
                 loginUser.setUser(user);
             }
         }
         return loginUser;
-    }
-
-    public User findUserByUsername(String username) {
-        return userClient.findUserByUsername(username).check().getData();
     }
 }
