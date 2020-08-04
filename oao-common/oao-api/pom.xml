@@ -15,7 +15,7 @@
     <!--内部引用 begin-->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oao-common-core</artifactId>
+      <artifactId>oao-starter-core</artifactId>
     </dependency>
     <!--内部引用 end-->
     <dependency>
