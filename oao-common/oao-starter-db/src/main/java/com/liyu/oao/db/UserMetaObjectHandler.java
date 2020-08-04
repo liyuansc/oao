@@ -1,14 +1,14 @@
-package com.liyu.oao.web.support;
+package com.liyu.oao.db;
 
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.liyu.oao.common.constant.OaoSecurityConstant;
+import com.liyu.oao.db.DateMetaObjectHandler;
 import com.liyu.oao.web.util.RequestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserMetaObjectHandler implements MetaObjectHandler {
+public class UserMetaObjectHandler extends DateMetaObjectHandler {
     private final static String CREATE_USER = "createUser";
     private final static String UPDATE_USER = "updateUser";
 
@@ -17,6 +17,7 @@ public class UserMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
+        super.insertFill(metaObject);
         HttpServletRequest request = RequestUtils.getRequest();
         if (request == null) return;
         String username = request.getHeader(OaoSecurityConstant.HttpHeader.I_USERNAME);
@@ -40,6 +41,7 @@ public class UserMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
+        super.updateFill(metaObject);
         //mybatis-plus版本2.0.9+
         HttpServletRequest request = RequestUtils.getRequest();
         if (request == null) return;

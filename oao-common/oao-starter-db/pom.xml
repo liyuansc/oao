@@ -17,6 +17,11 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>oao-starter-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oao-starter-web</artifactId>
+      <scope>provided</scope>
+    </dependency>
     <!--内部引用 end-->
     <dependency>
       <groupId>com.baomidou</groupId>

@@ -21,11 +21,6 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>oao-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>oao-starter-db</artifactId>
-      <scope>provided</scope>
-    </dependency>
     <!--内部引用 end-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

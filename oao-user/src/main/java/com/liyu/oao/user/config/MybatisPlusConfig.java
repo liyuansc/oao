@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.liyu.oao.db.OaoTenantHandler;
-import com.liyu.oao.web.support.UserMetaObjectHandler;
+import com.liyu.oao.db.UserMetaObjectHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
