@@ -1,4 +1,4 @@
-package com.liyu.oao.user.config;
+package com.liyu.oao.web.support;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.liyu.oao.common.constant.OaoSecurityConstant;
