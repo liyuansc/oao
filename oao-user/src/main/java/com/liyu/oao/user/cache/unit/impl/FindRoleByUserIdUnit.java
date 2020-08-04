@@ -8,8 +8,8 @@ import java.time.Duration;
 import java.util.Random;
 
 @Component
-public class FindUserByUserNameUnit implements ICacheUnit {
-    public final static String NAME = App.ID.USER + ":user:username";
+public class FindRoleByUserIdUnit implements ICacheUnit {
+    public final static String NAME = App.ID.USER + ":role:userId";
 
     @Override
     public String name() {
@@ -18,7 +18,7 @@ public class FindUserByUserNameUnit implements ICacheUnit {
 
     @Override
     public Duration expires() {
-        return Duration.ofMinutes(10)
+        return Duration.ofMinutes(5)
                 .plus(Duration.ofSeconds((new Random().nextInt(120) - 60)));
     }
 

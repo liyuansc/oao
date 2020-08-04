@@ -1,8 +1,8 @@
 package com.liyu.oao.uaa.config;
 
 import com.liyu.oao.web.config.DefaultWebMvcConfig;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Configuration;
 
-@Import(DefaultWebMvcConfig.class)
-public class WebConfig {
+@Configuration
+public class WebConfig extends DefaultWebMvcConfig {
 }

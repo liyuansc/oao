@@ -72,8 +72,8 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
             String clientId = request.getHeader(OaoSecurityConstant.HttpHeader.I_CLIENT_ID);
             if (isFull && userClient != null) {
-                User user = userClient.findLoginUserByUsername(username);
-                BeanUtils.copyProperties(user, loginUser);
+                LoginUser full = userClient.findLoginUserByUsername(username);
+                BeanUtils.copyProperties(full, loginUser);
             } else {
                 String authorities = request.getHeader(OaoSecurityConstant.HttpHeader.I_AUTHORITIES);
                 List<Role> roles = Arrays.stream(authorities.split(",")).map(a -> {
@@ -91,5 +91,13 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             loginUser.setClientId(clientId);
         }
         return loginUser;
+    }
+
+    public IUserClient getUserClient() {
+        return userClient;
+    }
+
+    public void setUserClient(IUserClient userClient) {
+        this.userClient = userClient;
     }
 }

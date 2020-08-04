@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import({DefaultCacheConfig.class, DefaultWebMvcConfig.class})
 public class OaoUserApplication {
 
     static {

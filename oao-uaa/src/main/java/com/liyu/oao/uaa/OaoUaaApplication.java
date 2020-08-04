@@ -12,7 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class OaoUaaApplication {
 
     static {
-        ParserConfig.getGlobalInstance().addAccept("com.liyu.oao");
         CurrentApp.setAppId(App.ID.UAA);
     }
 
