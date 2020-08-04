@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Import;
 
 @Import(FeignClientsConfiguration.class)
 //@EnableFeignClients
-
 //@EnableFeignClients(clients = {UserClient.class})
 public class UserClientAutoConfig {
 
@@ -25,7 +24,6 @@ public class UserClientAutoConfig {
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(contract)
-
 //                .requestInterceptor(new BasicAuthRequestInterceptor("user", "user"))
                 .target(IUserClient.class, "http://" + App.ID.USER, new UserClientFallbackFactory());
     }

@@ -2,6 +2,7 @@ package com.liyu.oao.user.controller.client;
 
 import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.common.constant.Route;
+import com.liyu.oao.common.model.Result;
 import com.liyu.oao.user.feign.IUserClient;
 import com.liyu.oao.user.model.po.User;
 import com.liyu.oao.user.service.IUserService;
@@ -19,13 +20,13 @@ public class UserClientImpl implements IUserClient {
 
     @Override
     @GetMapping("/user/username/{username}")
-    public User findByUsername(@PathVariable String username) {
-        return userService.findByUsername(username);
+    public Result<User> findByUsername(@PathVariable String username) {
+        return Result.success(userService.findByUsername(username));
     }
 
     @Override
     @GetMapping("/login_user/username/{username}")
-    public LoginUser findLoginUserByUsername(@PathVariable String username) {
-        return userService.findLoginUserByUsername(username);
+    public Result<LoginUser> findLoginUserByUsername(@PathVariable String username) {
+        return Result.success(userService.findLoginUserByUsername(username));
     }
 }

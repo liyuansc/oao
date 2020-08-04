@@ -16,19 +16,19 @@ import org.slf4j.LoggerFactory;
 public class UserClientFallbackFactory implements FallbackFactory<IUserClient> {
     private Logger logger = LoggerFactory.getLogger(UserClientFallbackFactory.class);
     private final String CLIENT_SERVICE_NAME = App.ID.USER;
-    private final Integer CODE = ResultCode.R1001.code();
-    private final String MSG = ResultCode.R1001.msg();
+    private final Integer CODE = ResultCode.R1101.code();
+    private final String MSG = ResultCode.R1101.msg();
 
     @Override
     public IUserClient create(Throwable cause) {
         return new IUserClient() {
             @Override
-            public User findByUsername(String username) {
+            public Result<User> findByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
 
             @Override
-            public LoginUser findLoginUserByUsername(String username) {
+            public Result<LoginUser> findLoginUserByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
         };

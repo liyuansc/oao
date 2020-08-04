@@ -71,7 +71,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
             String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
             String clientId = request.getHeader(OaoSecurityConstant.HttpHeader.I_CLIENT_ID);
             if (isFull && userClient != null) {
-                LoginUser full = userClient.findLoginUserByUsername(username);
+                LoginUser full = userClient.findLoginUserByUsername(username).check().getData();
                 BeanUtils.copyProperties(full, loginUser);
             } else {
                 String authorities = request.getHeader(OaoSecurityConstant.HttpHeader.I_AUTHORITIES);

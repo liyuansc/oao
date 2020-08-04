@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public class IdClientFallbackFactory implements FallbackFactory<IdClient> {
     private Logger logger = LoggerFactory.getLogger(UserClientFallbackFactory.class);
-    private final Integer CODE = ResultCode.R1001.code();
-    private final String MSG = ResultCode.R1001.msg();
+    private final Integer CODE = ResultCode.R1101.code();
+    private final String MSG = ResultCode.R1101.msg();
     private final String CLIENT_SERVICE_NAME = App.ID.ID;
 
     @Override

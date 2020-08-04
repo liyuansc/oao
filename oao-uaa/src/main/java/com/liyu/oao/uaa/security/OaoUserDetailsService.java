@@ -22,7 +22,7 @@ public class OaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LoginUser user = userClient.findLoginUserByUsername(username);
+        LoginUser user = userClient.findLoginUserByUsername(username).check().getData();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

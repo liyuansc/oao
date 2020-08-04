@@ -1,6 +1,6 @@
 package com.liyu.oao.user.controller;
 
-import com.liyu.oao.web.controller.DefaultControllerAdvice;
+import com.liyu.oao.web.controller.DefaultExceptionAdvice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * TODO 需要补充大量通用异常
  */
 @RestControllerAdvice
-public class ControllerAdvice extends DefaultControllerAdvice {
-    private Logger logger = LoggerFactory.getLogger(ControllerAdvice.class);
+public class ExceptionAdvice extends DefaultExceptionAdvice {
+    private Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 }
