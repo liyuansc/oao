@@ -18,9 +18,9 @@ public class SuperPo {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     @TableField(fill = FieldFill.INSERT)
-    private Date createUser;
+    private String createUser;
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateUser;
+    private String updateUser;
 
     public String getId() {
         return id;
@@ -46,19 +46,19 @@ public class SuperPo {
         this.updateTime = updateTime;
     }
 
-    public Date getCreateUser() {
+    public String getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Date createUser) {
+    public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
 
-    public Date getUpdateUser() {
+    public String getUpdateUser() {
         return updateUser;
     }
 
-    public void setUpdateUser(Date updateUser) {
+    public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }
 }
