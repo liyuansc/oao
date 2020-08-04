@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <parent>
     <artifactId>oao</artifactId>
     <groupId>com.liyu</groupId>
@@ -11,43 +11,16 @@
   </parent>
   <artifactId>oao-common</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-annotation</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-core</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <resources>
-      <!--规定打包的文件-->
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-          <include>**/*.yml</include>
-        </includes>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
+  <modules>
+    <module>oao-common-core</module>
+    <module>oao-api</module>
+    <module>oao-starter-core</module>
+    <module>oao-starter-redis</module>
+    <module>oao-starter-db</module>
+    <module>oao-starter-webflux</module>
+    <module>oao-starter-web</module>
+    <module>oao-starter-cloud</module>
+    <module>oao-starter-security</module>
+    <module>oao-mybatis-generator</module>
+  </modules>
 </project>

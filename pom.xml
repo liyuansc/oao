@@ -26,11 +26,11 @@
   </properties>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>org.projectlombok</groupId>-->
-<!--      <artifactId>lombok</artifactId>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.projectlombok</groupId>-->
+    <!--      <artifactId>lombok</artifactId>-->
+    <!--      <scope>provided</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -56,8 +56,6 @@
 
   <modules>
     <module>oao-common</module>
-    <module>oao-starter</module>
-    <module>oao-api</module>
     <module>oao-center</module>
     <module>oao-gateway</module>
     <module>oao-user</module>
@@ -70,7 +68,7 @@
       <!--内部引用 begin-->
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>oao-common</artifactId>
+        <artifactId>oao-common-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

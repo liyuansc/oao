@@ -23,7 +23,11 @@
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
-      <artifactId>oao-starter-webflux-security</artifactId>
+      <artifactId>oao-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oao-starter-security</artifactId>
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
