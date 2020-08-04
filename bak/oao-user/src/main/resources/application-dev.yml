@@ -1,0 +1,56 @@
+server:
+  port: 10200
+#微服务接入配置
+spring:
+  application:
+    name: oao-user
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: oao
+        weight: 1
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/oao_user?characterEncoding=utf8&useSSL=true&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 12366$4
+    readOnly: false
+    maxLifetime: 600000
+  redis:
+    hostName: 59.41.16.115
+    database: 4
+    password: ztRedis*&*66
+    port: 6698
+    timeout: 10000
+    pool-config:
+      maxIdle: 24
+      maxTotal: 24
+      minIdle: 8
+      maxWaitMillis: 10000
+      testOnBorrow: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+---
+
+logging:
+  level:
+    com.liyu: debug
+  file:
+    name: log/${spring.application.name}/${spring.application.name}
+mybatis-plus:
+  mapperLocations: classpath*:com/liyu/oao/**/dao/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: idDel  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 2 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
