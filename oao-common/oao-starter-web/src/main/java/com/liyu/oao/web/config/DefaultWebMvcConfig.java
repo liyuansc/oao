@@ -2,7 +2,7 @@ package com.liyu.oao.web.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.liyu.oao.user.feign.IUserClient;
+import com.liyu.oao.user.feign.UserClient;
 import com.liyu.oao.web.support.LoginArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,7 +19,7 @@ import java.util.List;
 @Configuration
 public class DefaultWebMvcConfig implements WebMvcConfigurer {
     @Autowired(required = false)
-    private IUserClient userClient;
+    private UserClient userClient;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

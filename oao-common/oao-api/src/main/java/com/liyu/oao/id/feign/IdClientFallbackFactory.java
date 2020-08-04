@@ -1,4 +1,4 @@
-package com.liyu.oao.id;
+package com.liyu.oao.id.feign;
 
 import com.liyu.oao.common.constant.ResultCode;
 import com.liyu.oao.common.model.App;

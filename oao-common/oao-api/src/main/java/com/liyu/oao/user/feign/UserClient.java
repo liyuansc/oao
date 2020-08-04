@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * Created by liyu on 2020/2/20
  */
 //@FeignClient(name = App.ID.USER, fallbackFactory = UserClientFallbackFactory.class)
-public interface IUserClient {
+public interface UserClient {
 
     @GetMapping(Route.I_USER + "/user/username/{username}")
     Result<User> findByUsername(@PathVariable("username") String username);

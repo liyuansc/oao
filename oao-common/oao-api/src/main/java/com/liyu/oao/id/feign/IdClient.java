@@ -1,4 +1,4 @@
-package com.liyu.oao.id;
+package com.liyu.oao.id.feign;
 
 import com.liyu.oao.common.model.Result;
 import org.springframework.web.bind.annotation.GetMapping;

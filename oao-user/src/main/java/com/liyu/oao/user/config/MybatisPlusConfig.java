@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParser
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.liyu.oao.db.OaoTenantHandler;
 import com.liyu.oao.db.UserMetaObjectHandler;
+import com.liyu.oao.id.feign.IdClient;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -26,6 +28,8 @@ import static com.liyu.oao.user.config.MybatisPlusConfig.MAPPER_LOCATION;
 @MapperScan(basePackages = MAPPER_LOCATION)
 public class MybatisPlusConfig {
     public final static String MAPPER_LOCATION = "com.liyu.oao.**.dao";
+    @Autowired(required = false)
+    private IdClient idClient;
 
     @Bean
     public PaginationInterceptor paginationInterceptor() {
@@ -51,6 +55,10 @@ public class MybatisPlusConfig {
 
     @Bean
     public IdentifierGenerator identifierGenerator() {
-        return new DefaultIdentifierGenerator();
+        if (this.idClient != null) {
+            return entity -> Long.valueOf(idClient.nextId().check().getData());
+        } else {
+            return new DefaultIdentifierGenerator();
+        }
     }
 }

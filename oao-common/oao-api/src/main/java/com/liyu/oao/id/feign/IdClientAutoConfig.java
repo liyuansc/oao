@@ -1,4 +1,4 @@
-package com.liyu.oao.user.feign;
+package com.liyu.oao.id.feign;
 
 import com.liyu.oao.common.model.App;
 import feign.Client;
@@ -11,25 +11,23 @@ import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-@ConditionalOnMissingBean(UserClient.class)
+@ConditionalOnMissingBean(IdClient.class)
 @Import(FeignClientsConfiguration.class)
-//@EnableFeignClients
-//@EnableFeignClients(clients = {UserClient.class})
-public class UserClientAutoConfig {
+//@EnableFeignClients(clients = IdClient.class)
+public class IdClientAutoConfig {
 
     @Bean
-    public UserClient userClient(Decoder decoder, Encoder encoder, Client client, Contract contract) {
+    public IdClient userClient(Decoder decoder, Encoder encoder, Client client, Contract contract) {
         return HystrixFeign.builder().client(client)
                 .encoder(encoder)
                 .decoder(decoder)
                 .contract(contract)
 //                .requestInterceptor(new BasicAuthRequestInterceptor("user", "user"))
-                .target(UserClient.class, "http://" + App.ID.USER, new UserClientFallbackFactory());
+                .target(IdClient.class, "http://" + App.ID.ID, new IdClientFallbackFactory());
     }
 
-//    //
 //    @Bean
-//    public UserClientFallbackFactory userClientFallbackFactory() {
-//        return new UserClientFallbackFactory();
+//    public IdClientFallbackFactory idClientFallbackFactory() {
+//        return new IdClientFallbackFactory();
 //    }
 }

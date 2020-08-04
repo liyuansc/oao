@@ -11,16 +11,4 @@ import java.util.List;
 
 @Configuration
 public class WebConfig extends DefaultWebMvcConfig {
-    @Autowired
-    private UserClientImpl userClient;
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        super.addArgumentResolvers(resolvers);
-        //因为是本地服务，所以userClient使用本地的实现类
-        resolvers.stream().filter(r -> r instanceof LoginArgumentResolver).map(r -> (LoginArgumentResolver) r).forEach(loginArgumentResolver -> {
-            loginArgumentResolver.setUserClient(userClient);
-        });
-
-    }
 }

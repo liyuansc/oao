@@ -4,7 +4,7 @@ import com.liyu.oao.api.annotation.Login;
 import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.common.constant.OaoSecurityConstant;
 import com.liyu.oao.common.model.OaoGrantedAuthority;
-import com.liyu.oao.user.feign.IUserClient;
+import com.liyu.oao.user.feign.UserClient;
 import com.liyu.oao.user.model.po.Role;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.MethodParameter;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
  * @date 2018/12/21
  */
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
-    private IUserClient userClient;
+    private UserClient userClient;
 
     public LoginArgumentResolver() {
     }
 
-    public LoginArgumentResolver(IUserClient userClient) {
+    public LoginArgumentResolver(UserClient userClient) {
         this.userClient = userClient;
     }
 
@@ -92,11 +92,11 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         return loginUser;
     }
 
-    public IUserClient getUserClient() {
+    public UserClient getUserClient() {
         return userClient;
     }
 
-    public void setUserClient(IUserClient userClient) {
+    public void setUserClient(UserClient userClient) {
         this.userClient = userClient;
     }
 }

@@ -3,7 +3,7 @@ package com.liyu.oao.uaa.security;
 import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.common.model.OaoGrantedAuthority;
 import com.liyu.oao.security.OaoUserDetails;
-import com.liyu.oao.user.feign.IUserClient;
+import com.liyu.oao.user.feign.UserClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class OaoUserDetailsService implements UserDetailsService {
     @Autowired
-    private IUserClient userClient;
+    private UserClient userClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

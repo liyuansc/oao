@@ -13,15 +13,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by liyu on 2020/2/20
  */
-public class UserClientFallbackFactory implements FallbackFactory<IUserClient> {
+public class UserClientFallbackFactory implements FallbackFactory<UserClient> {
     private Logger logger = LoggerFactory.getLogger(UserClientFallbackFactory.class);
     private final String CLIENT_SERVICE_NAME = App.ID.USER;
     private final Integer CODE = ResultCode.R1101.code();
     private final String MSG = ResultCode.R1101.msg();
 
     @Override
-    public IUserClient create(Throwable cause) {
-        return new IUserClient() {
+    public UserClient create(Throwable cause) {
+        return new UserClient() {
             @Override
             public Result<User> findByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);

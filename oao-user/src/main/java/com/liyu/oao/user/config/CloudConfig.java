@@ -1,10 +1,9 @@
-package com.liyu.oao.uaa.config;
+package com.liyu.oao.user.config;
 
 import com.liyu.oao.id.feign.EnableIdClient;
-import com.liyu.oao.user.feign.EnableUserClient;
 import org.springframework.context.annotation.Configuration;
 
-@EnableUserClient
 @Configuration
+//@EnableIdClient
 public class CloudConfig {
 }
