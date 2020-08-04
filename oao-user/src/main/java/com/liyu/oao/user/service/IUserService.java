@@ -1,6 +1,7 @@
 package com.liyu.oao.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.user.model.po.User;
 
 /**
@@ -13,4 +14,6 @@ import com.liyu.oao.user.model.po.User;
  */
 public interface IUserService extends IService<User> {
     User findByUsername(String username);
+
+    LoginUser findLoginUserByUsername(String username);
 }

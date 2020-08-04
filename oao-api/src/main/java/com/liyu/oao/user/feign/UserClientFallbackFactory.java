@@ -1,5 +1,6 @@
 package com.liyu.oao.user.feign;
 
+import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.common.constant.ResultCode;
 import com.liyu.oao.common.exception.InternalApiException;
 import com.liyu.oao.common.model.App;
@@ -25,12 +26,11 @@ public class UserClientFallbackFactory implements FallbackFactory<IUserClient> {
             public User findByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
-        };
-    }
 
-    public Result res(Throwable cause) {
-        String msg = MSG + ": " + CLIENT_SERVICE_NAME;
-        logger.debug(msg, cause);
-        return new Result(CODE, msg);
+            @Override
+            public LoginUser findLoginUserByUsername(String username) {
+                throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
+            }
+        };
     }
 }

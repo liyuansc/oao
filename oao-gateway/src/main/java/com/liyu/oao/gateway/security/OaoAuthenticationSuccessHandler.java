@@ -34,6 +34,7 @@ public class OaoAuthenticationSuccessHandler implements ServerAuthenticationSucc
         } else if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             rb.header(OaoSecurityConstant.HttpHeader.I_USERNAME, userDetails.getUsername());
+            rb.header(OaoSecurityConstant.HttpHeader.I_AUTHORITIES, userDetails.getAuthorities().stream().map(aa -> aa.getAuthority()).collect(Collectors.joining(",")));
             if (userDetails instanceof OaoUserDetails) {
                 OaoUserDetails oaoUserDetails = (OaoUserDetails) userDetails;
                 rb.header(OaoSecurityConstant.HttpHeader.I_USER_ID, oaoUserDetails.getId());

@@ -8,7 +8,7 @@ import com.liyu.oao.common.model.SuperPo;
  * </p>
  *
  * @author liyu
- * @since 2020-07-31
+ * @since 2020-08-03
  */
 public class Role extends SuperPo {
 
@@ -24,6 +24,11 @@ public class Role extends SuperPo {
      */
     private String name;
 
+    /**
+     * 租户id
+     */
+    private String tenantId;
+
     public String getCode() {
         return code;
     }
@@ -38,12 +43,20 @@ public class Role extends SuperPo {
     public void setName(String name) {
         this.name = name;
     }
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
     @Override
     public String toString() {
         return "Role{" +
             "code=" + code +
             ", name=" + name +
+            ", tenantId=" + tenantId +
         "}";
     }
 }

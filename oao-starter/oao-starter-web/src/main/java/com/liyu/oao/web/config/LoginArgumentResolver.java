@@ -3,8 +3,11 @@ package com.liyu.oao.web.config;
 import com.liyu.oao.api.annotation.Login;
 import com.liyu.oao.api.model.LoginUser;
 import com.liyu.oao.common.constant.OaoSecurityConstant;
+import com.liyu.oao.common.model.OaoGrantedAuthority;
 import com.liyu.oao.user.feign.IUserClient;
+import com.liyu.oao.user.model.po.Role;
 import com.liyu.oao.user.model.po.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -13,6 +16,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Token转化SysUser
@@ -65,14 +71,24 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         } else {
             String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
             String clientId = request.getHeader(OaoSecurityConstant.HttpHeader.I_CLIENT_ID);
+            if (isFull && userClient != null) {
+                User user = userClient.findLoginUserByUsername(username);
+                BeanUtils.copyProperties(user, loginUser);
+            } else {
+                String authorities = request.getHeader(OaoSecurityConstant.HttpHeader.I_AUTHORITIES);
+                List<Role> roles = Arrays.stream(authorities.split(",")).map(a -> {
+                    OaoGrantedAuthority authority = OaoGrantedAuthority.parse(a);
+                    Role role = new Role();
+                    role.setId(authority.getId());
+                    role.setCode(authority.getCode());
+                    return role;
+                }).collect(Collectors.toList());
+                loginUser.setRoles(roles);
+            }
             loginUser.setLogin(true);
-            loginUser.setUserId(userId);
+            loginUser.setId(userId);
             loginUser.setUsername(username);
             loginUser.setClientId(clientId);
-            if (isFull && userClient != null) {
-                User user = userClient.findByUsername(username);
-                loginUser.setUser(user);
-            }
         }
         return loginUser;
     }

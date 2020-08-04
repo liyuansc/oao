@@ -85,7 +85,7 @@ public class OaoUserAuthenticationConvert implements UserAuthenticationConverter
             } else if (map.containsKey(USER_ID)) {
                 String userId = (String) map.get(USER_ID);
                 String username = (String) principal;
-                principal = new OaoUserDetails(userId, username, null);
+                principal = new OaoUserDetails(userId, username, null, authorities);
             }
             return new UsernamePasswordAuthenticationToken(principal, "N/A", authorities);
         }

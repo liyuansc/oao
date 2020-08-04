@@ -10,6 +10,7 @@ public class OaoUserDetails implements UserDetails {
     private String id;
     private String username;
     private String password;
+    private Collection<? extends GrantedAuthority> authorities;
 
     public OaoUserDetails() {
     }
@@ -29,6 +30,13 @@ public class OaoUserDetails implements UserDetails {
         this.password = password;
     }
 
+    public OaoUserDetails(String id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     public String getId() {
         return id;
     }
@@ -39,6 +47,9 @@ public class OaoUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.authorities != null) {
+            return this.authorities;
+        }
         return AuthorityUtils.createAuthorityList();
     }
 
@@ -78,5 +89,9 @@ public class OaoUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 }
