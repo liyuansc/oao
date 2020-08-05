@@ -69,3 +69,8 @@ logging:
     name: log/${spring.application.name}/${spring.application.name}
 ---
 spring.cloud.circuitbreaker.sentinel.enabled: true
+---
+com:
+  liyu:
+    oao:
+

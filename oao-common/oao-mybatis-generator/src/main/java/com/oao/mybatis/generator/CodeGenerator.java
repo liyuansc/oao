@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.liyu.oao.common.model.SuperPo;
+import com.oao.common.model.SuperPo;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
