@@ -69,22 +69,22 @@ public class DefaultCacheConfig {
                 return new CacheErrorHandler() {
                     @Override
                     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
-                        logger.error("handleCacheGetError", exception);
+                        logger.error("handleCacheGetError:" + key, exception);
                     }
 
                     @Override
                     public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
-                        logger.error("handleCachePutError", exception);
+                        logger.error("handleCachePutError:" + key, exception);
                     }
 
                     @Override
                     public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
-                        logger.error("handleCacheEvictError", exception);
+                        logger.error("handleCacheEvictError:" + key, exception);
                     }
 
                     @Override
                     public void handleCacheClearError(RuntimeException exception, Cache cache) {
-                        logger.error("handleCacheClearError", exception);
+                        logger.error("handleCacheClearError:" + cache.getName(), exception);
                     }
                 };
             }
