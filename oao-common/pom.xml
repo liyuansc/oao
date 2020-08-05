@@ -21,6 +21,7 @@
     <module>oao-starter-web</module>
     <module>oao-starter-cloud</module>
     <module>oao-starter-security</module>
+    <module>oao-starter-swagger</module>
     <module>oao-mybatis-generator</module>
   </modules>
 </project>

@@ -39,6 +39,10 @@
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
+      <artifactId>oao-starter-swagger</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.liyu</groupId>
       <artifactId>oao-api</artifactId>
     </dependency>
     <!--内部引用 end-->

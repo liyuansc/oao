@@ -2,6 +2,7 @@ package com.liyu.oao.redis.cache.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.liyu.oao.common.constant.CodeConstant;
 import com.liyu.oao.redis.cache.OaoCacheManagerBuilder;
 import com.liyu.oao.redis.cache.unit.ICacheUnit;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class DefaultCacheConfig {
     private Logger logger = LoggerFactory.getLogger(DefaultCacheConfig.class);
 
     {
-        ParserConfig.getGlobalInstance().addAccept("com.liyu.oao");
+        ParserConfig.getGlobalInstance().addAccept(CodeConstant.BASE_PACKAGE);
     }
 
     @Bean

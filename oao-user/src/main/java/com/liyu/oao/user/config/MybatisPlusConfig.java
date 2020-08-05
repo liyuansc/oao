@@ -1,5 +1,6 @@
 package com.liyu.oao.user.config;
 
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
@@ -49,7 +50,7 @@ public class MybatisPlusConfig {
     }
 
     @Bean
-    public UserMetaObjectHandler metaObjectHandler() {
+    public MetaObjectHandler metaObjectHandler() {
         return new UserMetaObjectHandler();
     }
 

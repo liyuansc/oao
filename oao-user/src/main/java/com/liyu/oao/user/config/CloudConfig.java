@@ -4,6 +4,6 @@ import com.liyu.oao.id.feign.EnableIdClient;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-//@EnableIdClient
+@EnableIdClient
 public class CloudConfig {
 }
