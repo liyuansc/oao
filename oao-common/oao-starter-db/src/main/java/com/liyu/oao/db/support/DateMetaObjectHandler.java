@@ -1,4 +1,4 @@
-package com.liyu.oao.db;
+package com.liyu.oao.db.support;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
