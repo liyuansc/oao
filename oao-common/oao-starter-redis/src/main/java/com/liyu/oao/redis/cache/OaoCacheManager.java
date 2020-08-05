@@ -18,6 +18,7 @@ import java.util.Map;
 public class OaoCacheManager extends RedisCacheManager {
     private Map<String, ICacheUnit> cacheNameConfigMap;
     private Map<String, RedisCacheConfiguration> initialCacheConfigurations;
+    private Field cacheConfigField = ReflectionUtils.findField(RedisCache.class, "cacheConfig");
 
     OaoCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations, Map<String, ICacheUnit> cacheNameConfigMap) {
         super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations);
@@ -25,17 +26,18 @@ public class OaoCacheManager extends RedisCacheManager {
         this.initialCacheConfigurations = initialCacheConfigurations;
     }
 
+
     @Override
     public Cache getCache(String name) {
         Cache cache = super.getCache(name);
         do {
-            Cache redisCache = null;
+            RedisCache redisCache = null;
             if (cache instanceof RedisCache) {
-                redisCache = cache;
+                redisCache = (RedisCache) cache;
             } else if (cache instanceof TransactionAwareCacheDecorator) {
                 Cache targetCache = ((TransactionAwareCacheDecorator) cache).getTargetCache();
                 if ((targetCache instanceof RedisCache)) {
-                    redisCache = targetCache;
+                    redisCache = (RedisCache) targetCache;
                 }
             }
             if (redisCache == null) break;
@@ -45,13 +47,9 @@ public class OaoCacheManager extends RedisCacheManager {
             if (cacheUnit.dynamicExpires()) {
                 RedisCacheConfiguration cacheConfiguration = this.initialCacheConfigurations.computeIfPresent(name, (k, v) -> v.entryTtl(cacheUnit.expires()));
                 if (cacheConfiguration != null) {
-                    Field cacheConfigField = ReflectionUtils.findField(RedisCache.class, "cacheConfig");
                     ReflectionUtils.makeAccessible(cacheConfigField);
                     ReflectionUtils.setField(cacheConfigField, redisCache, cacheConfiguration);
                 }
-            }
-            if (!cacheUnit.transactional()) {
-                cache = redisCache;
             }
         } while (false);
         return cache;

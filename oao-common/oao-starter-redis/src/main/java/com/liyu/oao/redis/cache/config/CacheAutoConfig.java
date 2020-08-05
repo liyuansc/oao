@@ -30,11 +30,11 @@ import java.util.stream.Stream;
  * Created by liyu on 2018/8/9.
  */
 @EnableCaching
-public class DefaultCacheConfig {
+public class CacheAutoConfig {
     @Autowired(required = false)
     private List<ICacheUnit> cacheUnits = Collections.emptyList();
 
-    private Logger logger = LoggerFactory.getLogger(DefaultCacheConfig.class);
+    private Logger logger = LoggerFactory.getLogger(CacheAutoConfig.class);
 
     {
         ParserConfig.getGlobalInstance().addAccept(CodeConstant.BASE_PACKAGE);
