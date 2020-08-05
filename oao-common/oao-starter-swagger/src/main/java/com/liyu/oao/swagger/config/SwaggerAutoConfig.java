@@ -2,6 +2,7 @@ package com.liyu.oao.swagger.config;
 
 import com.liyu.oao.common.constant.CodeConstant;
 import com.liyu.oao.common.constant.CurrentApp;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -10,8 +11,8 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@ConditionalOnMissingBean(Docket.class)
 public class SwaggerAutoConfig {
 
     @Bean

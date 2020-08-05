@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import(SwaggerAutoConfig.class)
 public class OaoUserApplication {
 
     static {
