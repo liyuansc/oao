@@ -1,11 +1,11 @@
 package com.oao.web.support;
 
 import com.oao.api.annotation.Login;
-import com.oao.api.model.LoginUser;
+import com.oao.user.model.LoginUser;
 import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.user.feign.UserClient;
-import com.oao.user.model.po.Role;
+import com.oao.user.model.po.OaoRole;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
@@ -75,9 +75,9 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
                 BeanUtils.copyProperties(full, loginUser);
             } else {
                 String authorities = request.getHeader(OaoSecurityConstant.HttpHeader.I_AUTHORITIES);
-                List<Role> roles = Arrays.stream(authorities.split(",")).map(a -> {
+                List<OaoRole> roles = Arrays.stream(authorities.split(",")).map(a -> {
                     OaoGrantedAuthority authority = OaoGrantedAuthority.parse(a);
-                    Role role = new Role();
+                    OaoRole role = new OaoRole();
                     role.setId(authority.getId());
                     role.setCode(authority.getCode());
                     return role;

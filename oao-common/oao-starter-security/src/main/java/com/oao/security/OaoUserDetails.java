@@ -1,19 +1,18 @@
 package com.oao.security;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Data
 public class OaoUserDetails implements UserDetails {
     private String id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-
-    public OaoUserDetails() {
-    }
 
     public OaoUserDetails(String username) {
         this.username = username;
@@ -37,14 +36,6 @@ public class OaoUserDetails implements UserDetails {
         this.authorities = authorities;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.authorities != null) {
@@ -58,17 +49,9 @@ public class OaoUserDetails implements UserDetails {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
@@ -89,9 +72,5 @@ public class OaoUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
     }
 }

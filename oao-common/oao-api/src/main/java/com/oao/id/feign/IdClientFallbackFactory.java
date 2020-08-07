@@ -1,7 +1,7 @@
 package com.oao.id.feign;
 
 import com.oao.common.constant.ResultCode;
-import com.oao.common.model.App;
+import com.oao.common.constant.App;
 import com.oao.common.model.Result;
 import com.oao.user.feign.UserClientFallbackFactory;
 import feign.hystrix.FallbackFactory;

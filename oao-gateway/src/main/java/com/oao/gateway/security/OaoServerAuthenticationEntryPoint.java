@@ -35,7 +35,7 @@ public class OaoServerAuthenticationEntryPoint implements ServerAuthenticationEn
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        logger.error("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
+        logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
         Result result = ResultCode.R2000.build().withMsg(e.getMessage());
         return WebfluxResponseUtils.writeJSON(exchange, result);
     }

@@ -17,7 +17,7 @@ public class OaoServerAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
         ServerHttpRequest request = exchange.getRequest();
-        logger.error("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getURI());
+        logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getURI());
         Result result = Result.failed().withCode(ResultCode.R2000.code()).withMsg(e.getMessage());
         return WebfluxResponseUtils.writeJSON(exchange, result);
     }

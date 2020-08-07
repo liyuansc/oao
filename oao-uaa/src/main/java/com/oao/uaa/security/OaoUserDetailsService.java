@@ -1,6 +1,6 @@
 package com.oao.uaa.security;
 
-import com.oao.api.model.LoginUser;
+import com.oao.user.model.LoginUser;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.security.OaoUserDetails;
 import com.oao.user.feign.UserClient;

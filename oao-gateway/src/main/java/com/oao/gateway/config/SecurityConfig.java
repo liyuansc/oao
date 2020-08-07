@@ -7,6 +7,7 @@ import com.oao.security.OaoUserAuthenticationConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -84,18 +85,22 @@ public class SecurityConfig {
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
 //                .and()
-                .authorizeExchange();
+                .authorizeExchange()
+                .pathMatchers(HttpMethod.OPTIONS).permitAll();
 //        List<String> permitUris = securityProperties.getPermitUris();
 //        if (permitUris != null) {
 //            authorizeExchange.pathMatchers(permitUris.stream().toArray(String[]::new)).permitAll();
 //        }
-        authorizeExchange.anyExchange().access(oaoAuthorizationManager());
-        return authorizeExchange
+        authorizeExchange.anyExchange()
+                .access(oaoAuthorizationManager());
+        SecurityWebFilterChain chain =  authorizeExchange
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(serverAccessDeniedHandler())
                 .authenticationEntryPoint(serverAuthenticationEntryPoint())
                 .and().build();
+
+        return chain;
 
 
 //        ServerHttpSecurity.FormLoginSpec formLoginSpec = http.formLogin();

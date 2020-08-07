@@ -28,14 +28,16 @@
     <freemarker.version>2.3.29</freemarker.version>
     <jjwt.version>0.9.1</jjwt.version>
     <fastjson.verison>1.2.70</fastjson.verison>
+    <lombok.verison>1.18.12</lombok.verison>
   </properties>
 
   <dependencies>
-    <!--    <dependency>-->
-    <!--      <groupId>org.projectlombok</groupId>-->
-    <!--      <artifactId>lombok</artifactId>-->
-    <!--      <scope>provided</scope>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.verison}</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -150,11 +152,6 @@
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
         <version>${fastjson.verison}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <optional>true</optional>
       </dependency>
       <dependency>
         <groupId>com.baomidou</groupId>

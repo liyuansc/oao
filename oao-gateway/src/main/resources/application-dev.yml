@@ -15,6 +15,10 @@ spring:
         weight: 1
     gateway:
       default-filters:
+        - name: CircuitBreaker
+          args:
+            name: global
+            fallbackUri: forward:/fallback
 #        - name: CircuitBreaker
 #          args:
 #            name: all
@@ -64,13 +68,14 @@ spring:
 ---
 logging:
   level:
-    com.liyu: debug
+    com.oao: debug
   file:
     name: log/${spring.application.name}/${spring.application.name}
 ---
 spring.cloud.circuitbreaker.sentinel.enabled: true
 ---
 com:
-  liyu:
-    oao:
-
+  oao:
+    gateway:
+      security:
+        permitUris: /api/user/user/login_user

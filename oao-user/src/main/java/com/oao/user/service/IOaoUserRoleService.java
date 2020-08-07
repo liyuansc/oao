@@ -1,6 +1,6 @@
 package com.oao.user.service;
 
-import com.oao.user.model.po.UserRole;
+import com.oao.user.model.po.OaoUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author liyu
  * @since 2020-08-03
  */
-public interface IUserRoleService extends IService<UserRole> {
+public interface IOaoUserRoleService extends IService<OaoUserRole> {
 
 }

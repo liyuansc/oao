@@ -1,4 +1,4 @@
-package com.oao.common.model;
+package com.oao.common.constant;
 
 public class App {
     public static class ID {

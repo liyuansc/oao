@@ -1,6 +1,6 @@
 package com.oao.id.feign;
 
-import com.oao.common.model.App;
+import com.oao.common.constant.App;
 import feign.Client;
 import feign.Contract;
 import feign.codec.Decoder;

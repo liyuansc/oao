@@ -1,8 +1,10 @@
 package com.oao.common.model;
 
+import lombok.Data;
+
+@Data
 public class OaoGrantedAuthority {
     public final static String DELIMITER = "-";
-
     private String id;
     private String code;
 
@@ -18,21 +20,5 @@ public class OaoGrantedAuthority {
 
     public String getAuthority() {
         return String.join(DELIMITER, this.id, this.code);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 }

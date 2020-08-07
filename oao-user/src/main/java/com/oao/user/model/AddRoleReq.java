@@ -1,10 +1,10 @@
 package com.oao.user.model;
 
-import com.oao.user.model.po.Role;
+import com.oao.user.model.po.OaoRole;
 
 import javax.validation.constraints.NotBlank;
 
-public class AddRoleReq extends Role {
+public class AddRoleReq extends OaoRole {
 
     @NotBlank
     @Override

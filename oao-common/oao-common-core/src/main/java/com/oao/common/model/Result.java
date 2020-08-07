@@ -4,10 +4,13 @@ package com.oao.common.model;
 import com.oao.common.constant.CurrentApp;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.exception.ResultException;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by liyu on 2018/1/19.
  */
+@Data
 public class Result<T> {
     private Integer code;
     private String msg;
@@ -16,9 +19,6 @@ public class Result<T> {
 
     {
         this.appId = CurrentApp.getAppId();
-    }
-
-    public Result() {
     }
 
     public Result(Integer code, String msg) {
@@ -69,38 +69,5 @@ public class Result<T> {
     public Result<T> withData(T data) {
         this.data = data;
         return this;
-    }
-
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
     }
 }

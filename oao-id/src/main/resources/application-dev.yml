@@ -25,6 +25,6 @@ management:
 
 logging:
   level:
-    com.liyu: debug
+    com.oao: debug
   file:
     name: log/${spring.application.name}/${spring.application.name}

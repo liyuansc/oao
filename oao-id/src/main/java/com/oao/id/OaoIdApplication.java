@@ -1,7 +1,7 @@
 package com.oao.id;
 
 import com.oao.common.constant.CurrentApp;
-import com.oao.common.model.App;
+import com.oao.common.constant.App;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

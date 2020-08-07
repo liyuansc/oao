@@ -1,7 +1,7 @@
 package com.oao.user.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.oao.user.model.po.User;
+import com.oao.user.model.po.OaoUser;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.oao.user.model.po.User;
  * @author liyu
  * @since 2020-06-23
  */
-public interface UserDao extends BaseMapper<User> {
+public interface OaoUserDao extends BaseMapper<OaoUser> {
 
 }

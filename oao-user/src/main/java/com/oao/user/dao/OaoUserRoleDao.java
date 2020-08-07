@@ -1,6 +1,6 @@
 package com.oao.user.dao;
 
-import com.oao.user.model.po.UserRole;
+import com.oao.user.model.po.OaoUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author liyu
  * @since 2020-08-03
  */
-public interface UserRoleDao extends BaseMapper<UserRole> {
+public interface OaoUserRoleDao extends BaseMapper<OaoUserRole> {
 
 }

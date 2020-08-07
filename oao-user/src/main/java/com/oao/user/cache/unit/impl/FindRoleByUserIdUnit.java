@@ -1,6 +1,6 @@
 package com.oao.user.cache.unit.impl;
 
-import com.oao.common.model.App;
+import com.oao.common.constant.App;
 import com.oao.redis.cache.unit.ICacheUnit;
 import org.springframework.stereotype.Component;
 
