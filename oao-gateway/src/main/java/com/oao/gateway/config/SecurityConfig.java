@@ -1,12 +1,10 @@
 package com.oao.gateway.config;
 
-import com.oao.gateway.security.OaoAuthenticationSuccessHandler;
-import com.oao.gateway.security.OaoOauth2AuthenticationManager;
-import com.oao.gateway.security.OaoTokenAuthenticationConverter;
+import com.oao.gateway.properties.SecurityProperties;
+import com.oao.gateway.security.*;
 import com.oao.security.JwtTokenManage;
 import com.oao.security.OaoUserAuthenticationConvert;
-import com.oao.gateway.security.OaoServerAccessDeniedHandler;
-import com.oao.gateway.security.OaoServerAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -24,10 +22,15 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 
+import java.util.List;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebFluxSecurity
 public class SecurityConfig {
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Bean
     public ReactiveAuthenticationManager authenticationManager() {
         return new OaoOauth2AuthenticationManager(tokenStore());
@@ -49,6 +52,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public OaoAuthorizationManager oaoAuthorizationManager() {
+        return new OaoAuthorizationManager();
+    }
+
+    @Bean
     public SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
         //token转换器
         OaoTokenAuthenticationConverter tokenAuthenticationConverter = new OaoTokenAuthenticationConverter();
@@ -61,10 +69,8 @@ public class SecurityConfig {
 //        authenticationWebFilter.setAuthenticationSuccessHandler();
         authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(authenticationEntryPoint));
         authenticationWebFilter.setAuthenticationSuccessHandler(new OaoAuthenticationSuccessHandler());
-
-
         http.addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);
-        return http
+        ServerHttpSecurity.AuthorizeExchangeSpec authorizeExchange = http
 
                 .csrf().disable()
                 //用我们自己的登录
@@ -78,10 +84,13 @@ public class SecurityConfig {
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
 //                .and()
-                .authorizeExchange()
-                .pathMatchers("/api/uaa/auth/login").permitAll()
-                .anyExchange().authenticated()
-
+                .authorizeExchange();
+//        List<String> permitUris = securityProperties.getPermitUris();
+//        if (permitUris != null) {
+//            authorizeExchange.pathMatchers(permitUris.stream().toArray(String[]::new)).permitAll();
+//        }
+        authorizeExchange.anyExchange().access(oaoAuthorizationManager());
+        return authorizeExchange
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(serverAccessDeniedHandler())
