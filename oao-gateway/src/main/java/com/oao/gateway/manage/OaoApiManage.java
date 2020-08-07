@@ -23,7 +23,7 @@ public class OaoApiManage {
             .newBuilder()
             //2分钟后过期
             .expireAfterWrite(Duration.ofMinutes(2))
-            //60秒后自动刷新
+            //30秒后自动刷新
             .refreshAfterWrite(Duration.ofSeconds(30))
             .maximumSize(1)
             .buildAsync(new CacheLoader<Integer, List<OaoApi>>() {

@@ -40,8 +40,8 @@ public class OaoAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.error("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
-        Result result = ResultCode.R2000.build().withMsg(e.getMessage());
+        logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
+        Result result = ResultCode.R2000.build();
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(JSON.toJSONString(result));

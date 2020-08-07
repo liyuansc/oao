@@ -20,8 +20,8 @@ public class OaoAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        logger.error("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
-        Result result = ResultCode.R2000.build().withMsg(e.getMessage());
+        logger.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
+        Result result = ResultCode.R2000.build();
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(JSON.toJSONString(result));
