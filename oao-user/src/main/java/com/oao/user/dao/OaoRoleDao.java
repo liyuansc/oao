@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface OaoRoleDao extends BaseMapper<OaoRole> {
 
-    @Select("SELECT r.* FROM oao_role r INNER JOIN oao_user_role ur ON r.id = ur.role_id AND ur.user_id = #{userId}")
+    @Select("SELECT r.* FROM oao_role r INNER JOIN oao_user_role ur ON r.id = ur.role_id AND ur.user_id = #{userId} AND r.del = 0")
     List<OaoRole> findListByUserId(String userId);
 }

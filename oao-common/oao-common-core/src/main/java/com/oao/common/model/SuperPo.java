@@ -24,4 +24,5 @@ public class SuperPo {
     private String createUser;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
+    private Integer del;
 }
