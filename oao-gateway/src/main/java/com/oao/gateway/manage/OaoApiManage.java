@@ -18,23 +18,23 @@ import java.util.List;
 public class OaoApiManage {
     @Autowired
     private UserClient userClient;
-    private final static String cacheKey = "all";
 
-    private AsyncLoadingCache<String, List<OaoApi>> cache = Caffeine
+    private AsyncLoadingCache<Integer, List<OaoApi>> cache = Caffeine
             .newBuilder()
             //2分钟后过期
             .expireAfterWrite(Duration.ofMinutes(2))
             //60秒后自动刷新
-            .refreshAfterWrite(Duration.ofSeconds(60))
-            .buildAsync(new CacheLoader<String, List<OaoApi>>() {
+            .refreshAfterWrite(Duration.ofSeconds(30))
+            .maximumSize(1)
+            .buildAsync(new CacheLoader<Integer, List<OaoApi>>() {
                 @Nullable
                 @Override
-                public List<OaoApi> load(@NonNull String key) {
+                public List<OaoApi> load(@NonNull Integer key) {
                     return userClient.findAllApi().check().getData();
                 }
             });
 
     public Mono<List<OaoApi>> getAll() {
-        return Mono.fromFuture(cache.get(cacheKey));
+        return Mono.fromFuture(cache.get(0));
     }
 }
