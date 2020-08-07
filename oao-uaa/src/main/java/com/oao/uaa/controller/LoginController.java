@@ -3,7 +3,7 @@ package com.oao.uaa.controller;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
 import com.oao.security.JwtTokenManage;
-import com.oao.uaa.model.vo.LoginReq;
+import com.oao.uaa.model.LoginReq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

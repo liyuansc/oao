@@ -1,4 +1,4 @@
-package com.oao.uaa.model.vo;
+package com.oao.uaa.model;
 
 public class LoginReq {
     private String username;
