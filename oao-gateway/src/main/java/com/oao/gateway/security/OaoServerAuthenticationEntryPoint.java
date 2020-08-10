@@ -20,23 +20,38 @@ import com.oao.common.model.Result;
 import com.oao.webflux.util.WebfluxResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
+import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 
 /**
  * jwt auth fail point
  *
  * @author wfnuser
  */
+@Component
 public class OaoServerAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
     private static final Logger logger = LoggerFactory.getLogger(OaoServerAuthenticationEntryPoint.class);
+    @Autowired
+    private ServerAccessDeniedHandler accessDeniedHandler;
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
-        Result result = ResultCode.R2000.build();
-        return WebfluxResponseUtils.writeJSON(exchange, result);
+        return Mono.defer(() -> {
+//            //兼容处理，具体看ExceptionTranslationWebFilter.class
+            if (e instanceof AuthenticationCredentialsNotFoundException && e.getCause() instanceof AccessDeniedException) {
+                return accessDeniedHandler.handle(exchange, (AccessDeniedException) e.getCause());
+            }
+            logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
+            Result result = ResultCode.R2000.build();
+            return WebfluxResponseUtils.writeJSON(exchange, result);
+        });
     }
 }

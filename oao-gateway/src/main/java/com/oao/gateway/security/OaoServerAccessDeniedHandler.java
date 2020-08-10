@@ -8,9 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+@Component
 public class OaoServerAccessDeniedHandler implements ServerAccessDeniedHandler {
     private static final Logger logger = LoggerFactory.getLogger(OaoServerAuthenticationEntryPoint.class);
 
@@ -18,7 +20,7 @@ public class OaoServerAccessDeniedHandler implements ServerAccessDeniedHandler {
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
         ServerHttpRequest request = exchange.getRequest();
         logger.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getURI());
-        Result result = ResultCode.R2000.build();
+        Result result = ResultCode.R2001.build();
         return WebfluxResponseUtils.writeJSON(exchange, result);
     }
 }

@@ -1,6 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
 logging:
   config: classpath:log/oao-log-defalut.xml
 mybatis-plus:
+  mapperLocations: classpath*:com/oao/**/dao/**/*.xml
   global-config:
     db-config:
       logic-delete-field: del  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。

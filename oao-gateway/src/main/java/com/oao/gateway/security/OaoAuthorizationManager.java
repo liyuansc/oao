@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,9 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
         return authenticationMono
                 .flatMap(authentication -> isGranted(request, authentication))
                 .switchIfEmpty(Mono.defer(() -> isGranted(request, null)))
-                .map(granted -> new AuthorizationDecision(granted));
+                .map(granted -> new AuthorizationDecision(granted))
+                .onErrorResume((err) -> Mono.error(new AuthorizationServiceException("授权异常", err)))
+                ;
     }
 
     /**

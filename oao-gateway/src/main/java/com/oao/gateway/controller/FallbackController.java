@@ -20,8 +20,8 @@ import org.springframework.web.server.ServerWebExchange;
 public class FallbackController {
     private Logger log = LoggerFactory.getLogger(FallbackController.class);
 
-    @Value("${hystrixLog:false}")
-    private boolean hystrixLog;
+    @Value("${fallbackLog:false}")
+    private boolean fallbackLog;
 
     @RequestMapping
     public Result<Void> fallback(ServerWebExchange exchange) {
@@ -32,7 +32,7 @@ public class FallbackController {
         }
         String msg = "服务繁忙中，请稍候再试: " + route.getId();
         Throwable e = exchange.getAttribute(ServerWebExchangeUtils.HYSTRIX_EXECUTION_EXCEPTION_ATTR);
-        if (hystrixLog && e != null) {
+        if (fallbackLog && e != null) {
             //TODO 测试删除
             log.error(msg, e);
         }

@@ -32,20 +32,10 @@ spring:
       minIdle: 8
       maxWaitMillis: 10000
       testOnBorrow: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
 ---
-
 logging:
   level:
     com.oao: debug
   file:
     name: log/${spring.application.name}/${spring.application.name}
 mybatis-plus:
-  mapperLocations: classpath*:com/liyu/oao/**/dao/**/*.xml

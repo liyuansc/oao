@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.oao.common.constant.CodeConstant;
 import com.oao.db.support.UserMetaObjectHandler;
 import com.oao.id.feign.IdClient;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Created by liyu on 2020/2/20
  */
 @EnableTransactionManagement
+@MapperScan(basePackages = CodeConstant.BASE_PACKAGE + ".**.dao")
 public class MybatisPlusAutoConfig {
     @Autowired(required = false)
     private IdClient idClient;

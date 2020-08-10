@@ -1,7 +1,10 @@
 package com.oao.gateway.config;
 
 import com.oao.gateway.properties.SecurityProperties;
-import com.oao.gateway.security.*;
+import com.oao.gateway.security.OaoAuthenticationSuccessHandler;
+import com.oao.gateway.security.OaoAuthorizationManager;
+import com.oao.gateway.security.OaoOauth2AuthenticationManager;
+import com.oao.gateway.security.OaoTokenAuthenticationConverter;
 import com.oao.security.JwtTokenManage;
 import com.oao.security.OaoUserAuthenticationConvert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +26,16 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 
-import java.util.List;
-
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebFluxSecurity
 public class SecurityConfig {
     @Autowired
     private SecurityProperties securityProperties;
+    @Autowired
+    private ServerAccessDeniedHandler serverAccessDeniedHandler;
+    @Autowired
+    private ServerAuthenticationEntryPoint serverAuthenticationEntryPoint;
 
     @Bean
     public ReactiveAuthenticationManager authenticationManager() {
@@ -40,16 +45,6 @@ public class SecurityConfig {
     @Bean
     public JwtTokenManage jwtTokenManage() {
         return new JwtTokenManage();
-    }
-
-    @Bean
-    public ServerAccessDeniedHandler serverAccessDeniedHandler() {
-        return new OaoServerAccessDeniedHandler();
-    }
-
-    @Bean
-    public ServerAuthenticationEntryPoint serverAuthenticationEntryPoint() {
-        return new OaoServerAuthenticationEntryPoint();
     }
 
     @Bean
@@ -63,12 +58,11 @@ public class SecurityConfig {
         OaoTokenAuthenticationConverter tokenAuthenticationConverter = new OaoTokenAuthenticationConverter();
 //        tokenAuthenticationConverter.setAllowUriQueryParameter(true);
 
-        ServerAuthenticationEntryPoint authenticationEntryPoint = serverAuthenticationEntryPoint();
 
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(authenticationManager());
         authenticationWebFilter.setServerAuthenticationConverter(tokenAuthenticationConverter);
 //        authenticationWebFilter.setAuthenticationSuccessHandler();
-        authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(authenticationEntryPoint));
+        authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(serverAuthenticationEntryPoint));
         authenticationWebFilter.setAuthenticationSuccessHandler(new OaoAuthenticationSuccessHandler());
         http.addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         ServerHttpSecurity.AuthorizeExchangeSpec authorizeExchange = http
@@ -93,11 +87,11 @@ public class SecurityConfig {
 //        }
         authorizeExchange.anyExchange()
                 .access(oaoAuthorizationManager());
-        SecurityWebFilterChain chain =  authorizeExchange
+        SecurityWebFilterChain chain = authorizeExchange
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(serverAccessDeniedHandler())
-                .authenticationEntryPoint(serverAuthenticationEntryPoint())
+                .accessDeniedHandler(serverAccessDeniedHandler)
+                .authenticationEntryPoint(serverAuthenticationEntryPoint)
                 .and().build();
 
         return chain;
