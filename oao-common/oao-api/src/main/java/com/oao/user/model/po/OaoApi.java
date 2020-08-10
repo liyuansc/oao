@@ -35,6 +35,10 @@ public class OaoApi extends SuperPo {
     private String uri;
 
     /**
+     * 方法
+     */
+    private String method;
+    /**
      * 1-匿名资源，2-登录资源，3-角色资源
      */
     private Integer type;
