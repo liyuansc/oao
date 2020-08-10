@@ -65,13 +65,13 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
         });
     }
 
-    private OaoApi findApi(List<OaoApi> apis, String currentUri, HttpMethod method, Comparator<String> comparator) {
+    private OaoApi findApi(List<OaoApi> apis, String currentUri, HttpMethod currentMethod, Comparator<String> comparator) {
         if (apis == null) return null;
         return apis.stream()
                 //方法匹配
                 .filter(api -> {
-                    String apiMethod = api.getMethod();
-                    return StringUtils.isBlank(apiMethod) || method.matches(apiMethod);
+                    String apiMethodValue = api.getMethod();
+                    return StringUtils.isBlank(apiMethodValue) || currentMethod.matches(apiMethodValue);
                 })
                 //uri匹配
                 .filter(api -> antPathMatcher.match(api.getUri(), currentUri))
