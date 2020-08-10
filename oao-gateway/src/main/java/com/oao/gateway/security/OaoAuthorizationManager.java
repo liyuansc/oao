@@ -32,7 +32,7 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                 .flatMap(authentication -> isGranted(request, authentication))
                 .switchIfEmpty(Mono.defer(() -> isGranted(request, null)))
                 .map(granted -> new AuthorizationDecision(granted))
-                .onErrorResume((err) -> Mono.error(new AuthorizationServiceException("授权异常", err)))
+                .onErrorResume((err) -> Mono.error(new AuthorizationServiceException(err.getMessage(), err)))
                 ;
     }
 
