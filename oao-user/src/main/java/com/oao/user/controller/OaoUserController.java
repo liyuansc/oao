@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Route.USER + "/user")
+@RequestMapping(Route.A_USER + "/user")
 @Api("用户接口")
 public class OaoUserController {
 

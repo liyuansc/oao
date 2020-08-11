@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping(Route.UAA + "/auth")
+@RequestMapping(Route.A_UAA + "/auth")
 public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired

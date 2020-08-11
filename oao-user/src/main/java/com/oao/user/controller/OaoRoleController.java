@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(Route.USER + "/role")
+@RequestMapping(Route.A_USER + "/role")
 @Api(tags = "角色接口")
 public class OaoRoleController {
     @Autowired
