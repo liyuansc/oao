@@ -1,6 +1,7 @@
 package com.oao.gateway.security;
 
 import com.oao.common.constant.ApiConstant;
+import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.gateway.manage.OaoApiManage;
 import com.oao.user.model.po.OaoApi;
@@ -32,8 +33,7 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                 .flatMap(authentication -> isGranted(request, authentication))
                 .switchIfEmpty(Mono.defer(() -> isGranted(request, null)))
                 .map(granted -> new AuthorizationDecision(granted))
-                .onErrorResume((err) -> Mono.error(new AuthorizationServiceException(err.getMessage(), err)))
-                ;
+                .onErrorResume((err) -> Mono.error(new AuthorizationServiceException(err.getMessage(), err)));
     }
 
     /**
@@ -46,24 +46,26 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
         HttpMethod method = request.getMethod();
         Comparator<String> comparator = antPathMatcher.getPatternComparator(uri);
         return oaoApiManage.getApiMap().map(apiMap -> {
-            boolean isAuthentication = false;
-            if (authentication != null) isAuthentication = authentication.isAuthenticated();
             //匿名资源
             OaoApi anonymousApi = findApi(apiMap.get(ApiConstant.ANONYMOUS), uri, method, comparator);
             if (anonymousApi != null) return true;
-            //角色资源
-            OaoApi roleApi = findApi(apiMap.get(ApiConstant.ROLE), uri, method, comparator);
-            if (roleApi != null) {
-                if (!isAuthentication) return false;
-                else return authentication
-                        .getAuthorities()
-                        .stream()
-                        .map(authority -> OaoGrantedAuthority.parse(authority.getAuthority()))
-                        .anyMatch(authority -> roleApi.getRoleIds().contains(authority.getId()));
+            boolean isAuthentication = false;
+            if (authentication != null) isAuthentication = authentication.isAuthenticated();
+            if (isAuthentication) {
+                //角色资源
+                OaoApi roleApi = findApi(apiMap.get(ApiConstant.ROLE), uri, method, comparator);
+                if (roleApi != null) {
+                    return authentication
+                            .getAuthorities()
+                            .stream()
+                            .map(authority -> OaoGrantedAuthority.parse(authority.getAuthority()))
+                            //角色匹配或者是超级管理员
+                            .anyMatch(authority -> roleApi.getRoleIds().contains(authority.getId()) || OaoSecurityConstant.SUPER_ADMIN_ID.equals(authority.getId()));
+                }
+                //认证资源
+                OaoApi authenticatedApi = findApi(apiMap.get(ApiConstant.AUTHENTICATED), uri, method, comparator);
+                if (authenticatedApi != null) return true;
             }
-            //认证资源
-            OaoApi authenticatedApi = findApi(apiMap.get(ApiConstant.AUTHENTICATED), uri, method, comparator);
-            if (authenticatedApi != null) return isAuthentication;
             return false;
         });
     }

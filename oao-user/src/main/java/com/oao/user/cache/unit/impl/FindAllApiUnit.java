@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 
 @Component
-public class FindApiUnit implements ICacheUnit {
+public class FindAllApiUnit implements ICacheUnit {
     public final static String NAME = App.ID.USER + ":api";
 
     @Override

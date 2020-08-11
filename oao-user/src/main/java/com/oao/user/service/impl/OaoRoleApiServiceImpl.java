@@ -1,12 +1,15 @@
 package com.oao.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oao.user.dao.OaoRoleApiDao;
 import com.oao.user.model.po.OaoRoleApi;
 import com.oao.user.service.IOaoRoleApiService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>

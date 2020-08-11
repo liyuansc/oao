@@ -1,6 +1,8 @@
 package com.oao.common.constant;
 
 public class OaoSecurityConstant {
+    public final static String SUPER_ADMIN_ID = "1";
+
     public static class HttpHeader {
         public final static String ACCESS_TOKEN = "X-ACCESS-TOKEN";
 
