@@ -74,8 +74,3 @@ logging:
 ---
 spring.cloud.circuitbreaker.sentinel.enabled: true
 ---
-com:
-  oao:
-    gateway:
-      security:
-        permitUris: /api/user/user/login_user

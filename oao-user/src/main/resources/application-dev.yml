@@ -38,4 +38,3 @@ logging:
     com.oao: debug
   file:
     name: log/${spring.application.name}/${spring.application.name}
-mybatis-plus:

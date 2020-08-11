@@ -17,7 +17,7 @@ public class FindAllApiUnit implements ICacheUnit {
 
     @Override
     public Duration expires() {
-        return Duration.ofMinutes(3);
+        return Duration.ofMinutes(20);
     }
 
     @Override

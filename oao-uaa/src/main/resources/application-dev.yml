@@ -48,3 +48,5 @@ logging:
   file:
     name: log/${spring.application.name}/${spring.application.name}
 mybatis-plus:
+  mapperLocations: classpath*:com/liyu/oao/**/dao/**/*.xml
+

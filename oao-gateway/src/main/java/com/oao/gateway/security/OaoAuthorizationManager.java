@@ -43,9 +43,9 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
      * @return
      */
     public Mono<Boolean> isGranted(ServerHttpRequest request, Authentication authentication) {
-        //超级管理员全放行
+        //超级管理员直接放行
         if (isSuperAdmin(authentication)) {
-            return Mono.just(true);
+//            return Mono.just(true);
         }
         String uri = request.getURI().getPath();
         HttpMethod method = request.getMethod();

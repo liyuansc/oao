@@ -1,9 +1,9 @@
 package com.oao.uaa.config;
 
 import com.oao.security.JwtTokenManage;
-import com.oao.uaa.security.OaoUserDetailsService;
 import com.oao.uaa.security.OaoAccessDeniedHandler;
 import com.oao.uaa.security.OaoAuthenticationEntryPoint;
+import com.oao.uaa.security.OaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

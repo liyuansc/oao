@@ -1,6 +1,5 @@
 package com.oao.api.config;
 
-import feign.Client;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,13 +15,6 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
 public class OaoOkHttpClientAutoConfig {
-
-    @Bean
-    @ConditionalOnMissingBean({Client.class})
-    public Client feignClient(OkHttpClient client) {
-        return new feign.okhttp.OkHttpClient(client);
-    }
-
     @Bean
     @ConditionalOnMissingBean
     public OkHttpClient okHttpClient(SSLSocketFactory sslSocketFactory, X509TrustManager x509TrustManager, ConnectionPool connectionPool) {

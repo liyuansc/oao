@@ -18,3 +18,5 @@ mybatis-plus:
 feign:
   hystrix:
     enabled: true
+  okhttp:
+    enabled: true

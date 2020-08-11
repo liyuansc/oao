@@ -33,7 +33,7 @@ public class OaoApiServiceImpl extends ServiceImpl<OaoApiDao, OaoApi> implements
     private IOaoRoleApiService oaoRoleApiService;
 
     @Override
-    @Cacheable(cacheNames = FindAllApiUnit.NAME)
+    @Cacheable(cacheNames = FindAllApiUnit.NAME, key = "'all'")
     public List<OaoApi> findAll() {
         List<OaoApi> oaoApis = super.list();
         Map<String, List<OaoRoleApi>> roleApiMap = oaoRoleApiService.findAll().stream().collect(Collectors.groupingBy(OaoRoleApi::getApiId));
