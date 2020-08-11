@@ -33,13 +33,10 @@ public class OaoUser extends SuperPo {
 
     private Boolean enabled;
 
-    private String type;
-
     private String company;
 
     private String openId;
 
     @TableField(exist = false)
     private List<OaoRole> roles;
-
 }

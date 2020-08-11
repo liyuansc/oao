@@ -3,7 +3,7 @@ package com.oao.uaa.security;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.security.OaoUserDetails;
 import com.oao.user.feign.UserClient;
-import com.oao.user.model.LoginUser;
+import com.oao.user.model.OaoLoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +22,7 @@ public class OaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LoginUser user = userClient.findLoginUserByUsername(username).check().getData();
+        OaoLoginUser user = userClient.findLoginUserByUsername(username).check().getData();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

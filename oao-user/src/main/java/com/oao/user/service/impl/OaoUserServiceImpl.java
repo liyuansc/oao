@@ -2,7 +2,7 @@ package com.oao.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.oao.user.model.LoginUser;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.user.cache.unit.impl.FindUserByUserNameUnit;
 import com.oao.user.dao.OaoUserDao;
 import com.oao.user.model.po.OaoRole;
@@ -38,14 +38,14 @@ public class OaoUserServiceImpl extends ServiceImpl<OaoUserDao, OaoUser> impleme
     }
 
     @Override
-    public LoginUser findLoginUserByUsername(String username) {
+    public OaoLoginUser findLoginUserByUsername(String username) {
         OaoUser user = userService.findByUsername(username);
         if (user != null) {
             List<OaoRole> roles = roleService.findListByUserId(user.getId());
-            LoginUser loginUser = new LoginUser();
-            BeanUtils.copyProperties(user, loginUser);
-            loginUser.setRoles(roles);
-            return loginUser;
+            OaoLoginUser oaoLoginUser = new OaoLoginUser();
+            BeanUtils.copyProperties(user, oaoLoginUser);
+            oaoLoginUser.setRoles(roles);
+            return oaoLoginUser;
         }
         return null;
     }

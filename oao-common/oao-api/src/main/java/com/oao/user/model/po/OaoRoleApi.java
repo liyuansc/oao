@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OaoRoleApi extends SuperPo {
 
-    public OaoRoleApi(String roleId, String apiId) {
-        this.roleId = roleId;
-        this.apiId = apiId;
-    }
-
     private static final long serialVersionUID = 1L;
 
     private String roleId;
 
     private String apiId;
+
+    public OaoRoleApi(String roleId, String apiId) {
+        this.roleId = roleId;
+        this.apiId = apiId;
+    }
 }

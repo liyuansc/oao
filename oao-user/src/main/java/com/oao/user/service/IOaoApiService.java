@@ -21,5 +21,5 @@ public interface IOaoApiService extends IService<OaoApi> {
     boolean grantByApi(String apiId, List<String> roleIds);
 
     //以角色为单位，重新授权
-    boolean grantByRole(String roleId, List<String> apiId);
+    boolean grantByRole(String roleId, List<String> apiIds);
 }

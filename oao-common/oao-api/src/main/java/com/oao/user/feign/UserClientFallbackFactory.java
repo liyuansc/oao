@@ -4,7 +4,7 @@ import com.oao.common.constant.App;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.exception.InternalApiException;
 import com.oao.common.model.Result;
-import com.oao.user.model.LoginUser;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoApi;
 import com.oao.user.model.po.OaoUser;
 import feign.hystrix.FallbackFactory;
@@ -31,7 +31,7 @@ public class UserClientFallbackFactory implements FallbackFactory<UserClient> {
             }
 
             @Override
-            public Result<LoginUser> findLoginUserByUsername(String username) {
+            public Result<OaoLoginUser> findLoginUserByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
 

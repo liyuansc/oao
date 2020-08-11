@@ -1,7 +1,7 @@
 package com.oao.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.oao.user.model.LoginUser;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoUser;
 
 /**
@@ -15,5 +15,5 @@ import com.oao.user.model.po.OaoUser;
 public interface IOaoUserService extends IService<OaoUser> {
     OaoUser findByUsername(String username);
 
-    LoginUser findLoginUserByUsername(String username);
+    OaoLoginUser findLoginUserByUsername(String username);
 }

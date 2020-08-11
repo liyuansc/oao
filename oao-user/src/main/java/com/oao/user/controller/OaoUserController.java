@@ -1,7 +1,7 @@
 package com.oao.user.controller;
 
-import com.oao.api.annotation.Login;
-import com.oao.user.model.LoginUser;
+import com.oao.api.annotation.OaoLogin;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
 import com.oao.user.model.po.OaoUser;
@@ -19,8 +19,8 @@ public class OaoUserController {
 
     @ApiOperation("获取当前用户信息")
     @GetMapping("/login_user")
-    public Result<LoginUser> getLoginUser(@Login(isFull = true) LoginUser loginUser) {
-        return Result.success(loginUser);
+    public Result<OaoLoginUser> getLoginUser(@OaoLogin(isFull = true) OaoLoginUser oaoLoginUser) {
+        return Result.success(oaoLoginUser);
     }
 
     @ApiOperation("添加用户")

@@ -3,7 +3,7 @@ package com.oao.user.controller.client;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
 import com.oao.user.feign.UserClient;
-import com.oao.user.model.LoginUser;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoApi;
 import com.oao.user.model.po.OaoUser;
 import com.oao.user.service.IOaoApiService;
@@ -32,7 +32,7 @@ public class OaoUserClientImpl implements UserClient {
 
     @Override
     @GetMapping("/login_user/username/{username}")
-    public Result<LoginUser> findLoginUserByUsername(@PathVariable String username) {
+    public Result<OaoLoginUser> findLoginUserByUsername(@PathVariable String username) {
         return Result.success(oaoUserService.findLoginUserByUsername(username));
     }
 
