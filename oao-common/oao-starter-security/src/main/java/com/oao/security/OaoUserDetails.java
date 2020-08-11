@@ -14,10 +14,6 @@ public class OaoUserDetails implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public OaoUserDetails(String username) {
-        this.username = username;
-    }
-
     public OaoUserDetails(String username, String password) {
         this.username = username;
         this.password = password;

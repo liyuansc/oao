@@ -2,7 +2,6 @@ package com.oao.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.oao.common.constant.ApiConstant;
 import com.oao.user.cache.unit.impl.FindAllApiUnit;
 import com.oao.user.dao.OaoApiDao;
 import com.oao.user.model.po.OaoApi;
@@ -34,7 +33,7 @@ public class OaoApiServiceImpl extends ServiceImpl<OaoApiDao, OaoApi> implements
     private IOaoRoleApiService oaoRoleApiService;
 
     @Override
-    @Cacheable(cacheNames = FindAllApiUnit.NAME, key = "all")
+    @Cacheable(cacheNames = FindAllApiUnit.NAME)
     public List<OaoApi> findAll() {
         List<OaoApi> oaoApis = super.list();
         Map<String, List<OaoRoleApi>> roleApiMap = oaoRoleApiService.findAll().stream().collect(Collectors.groupingBy(OaoRoleApi::getApiId));
@@ -47,16 +46,21 @@ public class OaoApiServiceImpl extends ServiceImpl<OaoApiDao, OaoApi> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = FindAllApiUnit.NAME, key = "all")
-    public boolean grantApi(OaoApi api) {
-        String apiId = api.getId();
-        //更新数据
-        super.updateById(api);
+    @CacheEvict(cacheNames = FindAllApiUnit.NAME, allEntries = true)
+    public boolean grantByApi(String apiId, List<String> roleIds) {
         //删除之前的角色关联
         oaoRoleApiService.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getApiId, apiId));
-        if (api.getType() == ApiConstant.ROLE) {
-            oaoRoleApiService.saveBatch(api.getRoleIds().stream().map(roleId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
-        }
+        oaoRoleApiService.saveBatch(roleIds.stream().map(roleId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(cacheNames = FindAllApiUnit.NAME, allEntries = true)
+    public boolean grantByRole(String roleId, List<String> apiIds) {
+        //删除之前的角色关联
+        oaoRoleApiService.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getRoleId, roleId));
+        oaoRoleApiService.saveBatch(apiIds.stream().map(apiId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
         return true;
     }
 }

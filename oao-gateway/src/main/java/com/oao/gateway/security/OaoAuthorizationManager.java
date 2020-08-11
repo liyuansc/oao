@@ -4,6 +4,7 @@ import com.oao.common.constant.ApiConstant;
 import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.gateway.manage.OaoApiManage;
+import com.oao.security.OaoUserDetails;
 import com.oao.user.model.po.OaoApi;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,10 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
      * @return
      */
     public Mono<Boolean> isGranted(ServerHttpRequest request, Authentication authentication) {
+        //超级管理员全放行
+        if (isSuperAdmin(authentication)) {
+            return Mono.just(true);
+        }
         String uri = request.getURI().getPath();
         HttpMethod method = request.getMethod();
         Comparator<String> comparator = antPathMatcher.getPatternComparator(uri);
@@ -49,9 +54,8 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
             //匿名资源
             OaoApi anonymousApi = findApi(apiMap.get(ApiConstant.ANONYMOUS), uri, method, comparator);
             if (anonymousApi != null) return true;
-            boolean isAuthentication = false;
-            if (authentication != null) isAuthentication = authentication.isAuthenticated();
-            if (isAuthentication) {
+            //处理已登录的逻辑
+            if (authentication != null && authentication.isAuthenticated()) {
                 //角色资源
                 OaoApi roleApi = findApi(apiMap.get(ApiConstant.ROLE), uri, method, comparator);
                 if (roleApi != null) {
@@ -59,8 +63,7 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                             .getAuthorities()
                             .stream()
                             .map(authority -> OaoGrantedAuthority.parse(authority.getAuthority()))
-                            //角色匹配或者是超级管理员
-                            .anyMatch(authority -> roleApi.getRoleIds().contains(authority.getId()) || OaoSecurityConstant.SUPER_ADMIN_ID.equals(authority.getId()));
+                            .anyMatch(authority -> roleApi.getRoleIds().contains(authority.getId()));
                 }
                 //认证资源
                 OaoApi authenticatedApi = findApi(apiMap.get(ApiConstant.AUTHENTICATED), uri, method, comparator);
@@ -83,5 +86,16 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                 //排序,选取匹配度最高
                 .sorted((a1, a2) -> comparator.compare(a1.getUri(), a2.getUri()))
                 .findFirst().orElse(null);
+    }
+
+    private boolean isSuperAdmin(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof OaoUserDetails
+                    && OaoSecurityConstant.SUPER_ADMIN_ID.equals(((OaoUserDetails) principal).getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

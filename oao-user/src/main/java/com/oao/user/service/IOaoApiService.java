@@ -17,6 +17,9 @@ public interface IOaoApiService extends IService<OaoApi> {
 
     List<OaoApi> findAll();
 
-    //给api赋予重新分配角色
-    boolean grantApi(OaoApi api);
+    //以api为单位，重新授权
+    boolean grantByApi(String apiId, List<String> roleIds);
+
+    //以角色为单位，重新授权
+    boolean grantByRole(String roleId, List<String> apiId);
 }
