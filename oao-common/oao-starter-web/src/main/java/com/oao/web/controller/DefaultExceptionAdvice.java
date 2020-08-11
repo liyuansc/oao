@@ -30,11 +30,13 @@ import java.util.stream.Collectors;
  * 统一捕获异常的处理类
  * TODO 需要补充大量通用异常
  */
-//@RestControllerAdvice
 public class DefaultExceptionAdvice {
     private Logger logger = LoggerFactory.getLogger(DefaultExceptionAdvice.class);
 
-    @ExceptionHandler({HttpRequestMethodNotSupportedException.class, HttpMediaTypeNotSupportedException.class})
+    @ExceptionHandler({
+            HttpRequestMethodNotSupportedException.class,
+            HttpMediaTypeNotSupportedException.class
+    })
     public Result httpRequestMethodNotSupportedException(Exception e) {
         logger.error(e.getMessage(), e);
         return ResultCode.R1102.build();

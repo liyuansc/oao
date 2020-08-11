@@ -13,7 +13,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @ConditionalOnMissingBean(Docket.class)
-public class SwaggerAutoConfig {
+public class OaoSwaggerAutoConfig {
 
     @Bean
     public Docket createRestApi() {

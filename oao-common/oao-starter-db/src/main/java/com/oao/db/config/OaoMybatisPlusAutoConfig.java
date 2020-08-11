@@ -22,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @EnableTransactionManagement
 @MapperScan(basePackages = CodeConstant.BASE_PACKAGE + ".**.dao")
-public class MybatisPlusAutoConfig {
+public class OaoMybatisPlusAutoConfig {
     @Autowired(required = false)
     private IdClient idClient;
 

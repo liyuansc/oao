@@ -1,9 +1,9 @@
-package com.oao.uaa.config;
+package com.oao.api.config;
 
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -14,8 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
-@Configuration
-public class OkHttpClientConfig {
+@ConditionalOnMissingBean(OkHttpClient.class)
+public class OaoOkHttpClientAutoConfig {
     @Bean
     public OkHttpClient okHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
