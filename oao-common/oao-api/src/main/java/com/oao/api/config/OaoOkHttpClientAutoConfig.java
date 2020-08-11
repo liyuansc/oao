@@ -1,5 +1,6 @@
 package com.oao.api.config;
 
+import feign.Client;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,23 +15,37 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
-@ConditionalOnMissingBean(OkHttpClient.class)
 public class OaoOkHttpClientAutoConfig {
+
     @Bean
-    public OkHttpClient okHttpClient() {
+    @ConditionalOnMissingBean({Client.class})
+    public Client feignClient(OkHttpClient client) {
+        return new feign.okhttp.OkHttpClient(client);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public OkHttpClient okHttpClient(SSLSocketFactory sslSocketFactory, X509TrustManager x509TrustManager, ConnectionPool connectionPool) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(65, TimeUnit.SECONDS)
-                .writeTimeout(65, TimeUnit.SECONDS)
+//                .connectTimeout(20, TimeUnit.SECONDS)
+//                .readTimeout(65, TimeUnit.SECONDS)
+//                .writeTimeout(65, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
-                .sslSocketFactory(sslSocketFactory(), x509TrustManager())
+                .sslSocketFactory(sslSocketFactory, x509TrustManager)
                 .hostnameVerifier((s, sslSession) -> true)
-                .connectionPool(new ConnectionPool(5, 5, TimeUnit.MINUTES));
+                .connectionPool(connectionPool);
         return builder.build();
     }
 
     @Bean
+    @ConditionalOnMissingBean
+    public ConnectionPool OkHttpClientConnectionPool() {
+        return new ConnectionPool(5, 5, TimeUnit.MINUTES);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public X509TrustManager x509TrustManager() {
         return new X509TrustManager() {
             public X509Certificate[] getAcceptedIssuers() {
@@ -49,10 +64,11 @@ public class OaoOkHttpClientAutoConfig {
     }
 
     @Bean
-    public SSLSocketFactory sslSocketFactory() {
+    @ConditionalOnMissingBean
+    public SSLSocketFactory sslSocketFactory(X509TrustManager x509TrustManager) {
         try {
             SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, new TrustManager[]{x509TrustManager()}, new java.security.SecureRandom());
+            sc.init(null, new TrustManager[]{x509TrustManager}, new java.security.SecureRandom());
             return sc.getSocketFactory();
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e.getMessage(), e);
