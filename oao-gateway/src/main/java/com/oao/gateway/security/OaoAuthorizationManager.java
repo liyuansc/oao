@@ -48,6 +48,9 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
         return oaoApiManage.getApiMap().map(apiMap -> {
             boolean isAuthentication = false;
             if (authentication != null) isAuthentication = authentication.isAuthenticated();
+            //匿名资源
+            OaoApi anonymousApi = findApi(apiMap.get(ApiConstant.ANONYMOUS), uri, method, comparator);
+            if (anonymousApi != null) return true;
             //角色资源
             OaoApi roleApi = findApi(apiMap.get(ApiConstant.ROLE), uri, method, comparator);
             if (roleApi != null) {
@@ -61,9 +64,6 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
             //认证资源
             OaoApi authenticatedApi = findApi(apiMap.get(ApiConstant.AUTHENTICATED), uri, method, comparator);
             if (authenticatedApi != null) return isAuthentication;
-            //匿名资源
-            OaoApi anonymousApi = findApi(apiMap.get(ApiConstant.ANONYMOUS), uri, method, comparator);
-            if (anonymousApi != null) return true;
             return false;
         });
     }

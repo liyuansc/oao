@@ -21,6 +21,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -41,18 +42,22 @@ public class DefaultExceptionAdvice {
 
     @ExceptionHandler(BindException.class)
     public Result valid(BindException e) {
-        String msg = e.getBindingResult().getAllErrors().stream()
-                .map(error -> (error instanceof FieldError ? (((FieldError) error).getField()) : error.getDefaultMessage())
-                        + ":" + error.getDefaultMessage()).collect(Collectors.joining(","));
-        return new Result(ResultCode.R1103.code(), msg);
+        Map<String, String> body = e.getBindingResult().getAllErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        error -> error instanceof FieldError ? (((FieldError) error).getField()) : error.getObjectName(),
+                        error -> error.getDefaultMessage()));
+        return ResultCode.R1103.build(body);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result valid(MethodArgumentNotValidException e) {
-        String msg = e.getBindingResult().getAllErrors().stream()
-                .map(error -> (error instanceof FieldError ? (((FieldError) error).getField()) : error.getDefaultMessage())
-                        + ":" + error.getDefaultMessage()).collect(Collectors.joining(","));
-        return new Result(ResultCode.R1103.code(), msg);
+        Map<String, String> body = e.getBindingResult().getAllErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        error -> error instanceof FieldError ? (((FieldError) error).getField()) : error.getObjectName(),
+                        error -> error.getDefaultMessage()));
+        return ResultCode.R1103.build(body);
     }
 
     @ExceptionHandler({

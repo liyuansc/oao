@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(Route.UAA + "/auth")
@@ -36,7 +38,7 @@ public class LoginController {
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
     @PostMapping(value = "/login")
-    public Result<OAuth2AccessToken> login(@RequestBody @Validated LoginReq loginReq) throws InterruptedException {
+    public Result<OAuth2AccessToken> login(@RequestBody @Validated LoginReq loginReq) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginReq.getUsername(), loginReq.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -44,6 +46,15 @@ public class LoginController {
 //        Duration duration = Duration.of(12, ChronoUnit.DAYS);
 //        Date expiration = DateUtils.toDate(LocalDateTime.now().plus(duration));
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId("web");
+        if (clientDetails instanceof BaseClientDetails) {
+            //失效时间
+            BaseClientDetails baseClientDetails = ((BaseClientDetails) clientDetails);
+            if (loginReq.isRemember()) {
+                baseClientDetails.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(14));
+            } else {
+                baseClientDetails.setAccessTokenValiditySeconds((int) TimeUnit.HOURS.toSeconds(12));
+            }
+        }
         TokenRequest tokenRequest = new TokenRequest(new HashMap<>(), clientDetails.getClientId(), clientDetails.getScope(), "customer");
         OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);

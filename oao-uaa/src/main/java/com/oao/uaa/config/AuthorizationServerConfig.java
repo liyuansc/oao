@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
 
 /**
  * OAuth2 授权服务器配置
@@ -86,10 +85,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("web")
                 .secret("123456")
-                .accessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(12))
+//                .accessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(12))
                 .authorizedGrantTypes(OaoSecurityConstant.GrantType.AUTHORIZATION_CODE, OaoSecurityConstant.GrantType.CLIENT_CREDENTIALS)
-                .redirectUris("http://www.baidu.com")
-                .scopes("all")
+//                .redirectUris("http://www.baidu.com")
+                .scopes("web")
         ;
     }
 
