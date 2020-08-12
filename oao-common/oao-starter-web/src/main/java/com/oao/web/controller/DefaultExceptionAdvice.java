@@ -4,9 +4,8 @@ import com.oao.common.constant.ResultCode;
 import com.oao.common.exception.DatabaseException;
 import com.oao.common.exception.ResultException;
 import com.oao.common.model.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -30,15 +29,15 @@ import java.util.stream.Collectors;
  * 统一捕获异常的处理类
  * TODO 需要补充大量通用异常
  */
+@Slf4j
 public class DefaultExceptionAdvice {
-    private Logger logger = LoggerFactory.getLogger(DefaultExceptionAdvice.class);
 
     @ExceptionHandler({
             HttpRequestMethodNotSupportedException.class,
             HttpMediaTypeNotSupportedException.class
     })
     public Result httpRequestMethodNotSupportedException(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultCode.R1102.build();
     }
 
@@ -71,7 +70,7 @@ public class DefaultExceptionAdvice {
             ServletRequestBindingException.class
     })
     public Result databind(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultCode.R1103.build();
     }
 
@@ -82,7 +81,7 @@ public class DefaultExceptionAdvice {
 //            DataAccessException.class
     })
     public Result database(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultCode.R1001.build();
     }
 
@@ -95,7 +94,7 @@ public class DefaultExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultCode.R1000.build();
     }
 }

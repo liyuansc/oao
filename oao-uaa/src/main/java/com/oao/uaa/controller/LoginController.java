@@ -4,6 +4,7 @@ import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
 import com.oao.security.JwtTokenManage;
 import com.oao.uaa.model.LoginReq;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(Route.A_UAA + "/auth")
+@Slf4j
 public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private JwtTokenManage jwtTokenManage;
     @Autowired

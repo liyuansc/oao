@@ -3,6 +3,7 @@ package com.oao.gateway.security;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.model.Result;
 import com.oao.webflux.util.WebfluxResponseUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -14,13 +15,13 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Component
+@Slf4j
 public class OaoServerAccessDeniedHandler implements ServerAccessDeniedHandler {
-    private static final Logger logger = LoggerFactory.getLogger(OaoServerAuthenticationEntryPoint.class);
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
         ServerHttpRequest request = exchange.getRequest();
-        logger.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getURI());
+        log.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getURI());
         Result result;
         if (e instanceof AuthorizationServiceException) {
             //授权过程中出现异常

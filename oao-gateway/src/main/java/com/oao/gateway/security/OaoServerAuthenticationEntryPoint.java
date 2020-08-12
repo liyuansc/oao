@@ -18,6 +18,7 @@ package com.oao.gateway.security;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.model.Result;
 import com.oao.webflux.util.WebfluxResponseUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ import reactor.core.publisher.Mono;
  * @author wfnuser
  */
 @Component
+@Slf4j
 public class OaoServerAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
-    private static final Logger logger = LoggerFactory.getLogger(OaoServerAuthenticationEntryPoint.class);
     @Autowired
     private ServerAccessDeniedHandler accessDeniedHandler;
 
@@ -49,7 +50,7 @@ public class OaoServerAuthenticationEntryPoint implements ServerAuthenticationEn
             if (e instanceof AuthenticationCredentialsNotFoundException && e.getCause() instanceof AccessDeniedException) {
                 return accessDeniedHandler.handle(exchange, (AccessDeniedException) e.getCause());
             }
-            logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
+            log.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), exchange.getRequest().getURI());
             Result result = ResultCode.R2000.build();
             return WebfluxResponseUtils.writeJSON(exchange, result);
         });

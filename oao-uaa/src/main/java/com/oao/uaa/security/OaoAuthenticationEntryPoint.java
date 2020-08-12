@@ -18,6 +18,7 @@ package com.oao.uaa.security;
 import com.alibaba.fastjson.JSON;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.model.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -35,12 +36,12 @@ import java.io.IOException;
  *
  * @author wfnuser
  */
+@Slf4j
 public class OaoAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private static final Logger logger = LoggerFactory.getLogger(OaoAuthenticationEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
+        log.debug("Responding with unauthorized error. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
         Result result = ResultCode.R2000.build();
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());

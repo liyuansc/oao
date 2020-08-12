@@ -25,8 +25,6 @@ import reactor.core.publisher.Mono;
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ControllerAdvice {
-    private Logger logger = LoggerFactory.getLogger(ControllerAdvice.class);
-
     @Autowired
     private ServerAccessDeniedHandler serverAccessDeniedHandler;
     @Autowired
@@ -44,7 +42,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public Result exception(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultCode.R1000.build();
     }
 }

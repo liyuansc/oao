@@ -5,6 +5,7 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.oao.common.constant.CodeConstant;
 import com.oao.redis.cache.OaoCacheManagerBuilder;
 import com.oao.redis.cache.unit.ICacheUnit;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,10 @@ import java.util.stream.Stream;
  * Created by liyu on 2018/8/9.
  */
 @EnableCaching
+@Slf4j
 public class OaoCacheAutoConfig {
     @Autowired(required = false)
     private List<ICacheUnit> cacheUnits = Collections.emptyList();
-
-    private Logger logger = LoggerFactory.getLogger(OaoCacheAutoConfig.class);
 
     {
         ParserConfig.getGlobalInstance().addAccept(CodeConstant.BASE_PACKAGE);
@@ -69,22 +69,22 @@ public class OaoCacheAutoConfig {
                 return new CacheErrorHandler() {
                     @Override
                     public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
-                        logger.error("handleCacheGetError:" + key, exception);
+                        log.error("handleCacheGetError:" + key, exception);
                     }
 
                     @Override
                     public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
-                        logger.error("handleCachePutError:" + key, exception);
+                        log.error("handleCachePutError:" + key, exception);
                     }
 
                     @Override
                     public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
-                        logger.error("handleCacheEvictError:" + key, exception);
+                        log.error("handleCacheEvictError:" + key, exception);
                     }
 
                     @Override
                     public void handleCacheClearError(RuntimeException exception, Cache cache) {
-                        logger.error("handleCacheClearError:" + cache.getName(), exception);
+                        log.error("handleCacheClearError:" + cache.getName(), exception);
                     }
                 };
             }

@@ -13,5 +13,4 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class ExceptionAdvice extends DefaultExceptionAdvice {
-    private Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 }

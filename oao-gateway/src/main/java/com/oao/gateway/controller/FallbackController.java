@@ -2,6 +2,7 @@ package com.oao.gateway.controller;
 
 import com.oao.common.constant.ResultCode;
 import com.oao.common.model.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,8 @@ import org.springframework.web.server.ServerWebExchange;
  */
 @RestController
 @RequestMapping("fallback")
+@Slf4j
 public class FallbackController {
-    private Logger log = LoggerFactory.getLogger(FallbackController.class);
 
     @Value("${fallbackLog:false}")
     private boolean fallbackLog;

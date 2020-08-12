@@ -3,8 +3,7 @@ package com.oao.uaa.security;
 import com.alibaba.fastjson.JSON;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.model.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class OaoAccessDeniedHandler implements AccessDeniedHandler {
-    private static final Logger logger = LoggerFactory.getLogger(OaoAuthenticationEntryPoint.class);
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        logger.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
+        log.debug("AccessDenied. Message:{}, url:{}", e.getMessage(), request.getRequestURI());
         Result result = ResultCode.R2001.build();
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());

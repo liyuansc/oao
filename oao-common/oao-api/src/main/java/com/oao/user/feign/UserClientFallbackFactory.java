@@ -8,16 +8,15 @@ import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoApi;
 import com.oao.user.model.po.OaoUser;
 import feign.hystrix.FallbackFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * Created by liyu on 2020/2/20
  */
+@Slf4j
 public class UserClientFallbackFactory implements FallbackFactory<UserClient> {
-    private Logger logger = LoggerFactory.getLogger(UserClientFallbackFactory.class);
     private final String CLIENT_SERVICE_NAME = App.ID.USER;
     private final Integer CODE = ResultCode.R1101.code();
     private final String MSG = ResultCode.R1101.msg();
