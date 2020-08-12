@@ -1,5 +1,6 @@
 package com.oao.api.config;
 
+import lombok.SneakyThrows;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,8 +10,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
@@ -55,15 +54,12 @@ public class OaoOkHttpClientAutoConfig {
         };
     }
 
+    @SneakyThrows
     @Bean
     @ConditionalOnMissingBean
     public SSLSocketFactory sslSocketFactory(X509TrustManager x509TrustManager) {
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, new TrustManager[]{x509TrustManager}, new java.security.SecureRandom());
-            return sc.getSocketFactory();
-        } catch (KeyManagementException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, new TrustManager[]{x509TrustManager}, new java.security.SecureRandom());
+        return sc.getSocketFactory();
     }
 }

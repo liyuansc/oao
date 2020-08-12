@@ -5,9 +5,8 @@ import com.oao.common.model.Result;
 import com.oao.security.JwtTokenManage;
 import com.oao.uaa.model.LoginReq;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,7 +35,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private AuthorizationServerTokenServices authorizationServerTokenServices;
+    private AuthorizationServerTokenServices tokenService;
 
     @PostMapping(value = "/login")
     public Result<OAuth2AccessToken> login(@RequestBody @Validated LoginReq loginReq) {
@@ -59,7 +58,7 @@ public class LoginController {
         TokenRequest tokenRequest = new TokenRequest(new HashMap<>(), clientDetails.getClientId(), clientDetails.getScope(), "customer");
         OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-        OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+        OAuth2AccessToken oAuth2AccessToken = tokenService.createAccessToken(oAuth2Authentication);
 
 //        String tokenValue = jwtTokenManage.createToken(principal.getUsername(), expiration);
 //        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(tokenValue);

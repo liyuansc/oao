@@ -26,7 +26,6 @@ public class OaoUserController {
     @ApiOperation("获取当前用户信息")
     @GetMapping("/login_user")
     public Result<OaoLoginUser> getLoginUser(@OaoLogin(isFull = true) OaoLoginUser oaoLoginUser) {
-        log.debug(idClient.nextId().check().getData());
         return Result.success(oaoLoginUser);
     }
 
