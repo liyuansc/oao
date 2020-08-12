@@ -14,7 +14,7 @@ public @interface MLog {
 
     MArg[] value() default {};
 
-    boolean isDebug() default true;
+    boolean debug() default true;
 
     boolean afterThrow() default false;
 }

@@ -58,7 +58,7 @@ public class MLogAspect {
         List<MArg> beforeMArgs = isBeforeMArgs.getOrDefault(true, Collections.emptyList());
         if (beforeMArgs.size() > 0) {
             String beforeMsg = MessageFormat.format("{0}-before: [{1}]", title, formatArgs(beforeMArgs, evaluationContext, log));
-            if (mLog.isDebug()) log.debug(beforeMsg);
+            if (mLog.debug()) log.debug(beforeMsg);
             else log.info(beforeMsg);
         }
         Object result;
@@ -69,7 +69,7 @@ public class MLogAspect {
             List<MArg> afterMArgs = isBeforeMArgs.getOrDefault(false, new ArrayList<>());
             if (afterMArgs.size() > 0) {
                 String afterMsg = MessageFormat.format("{0}-after: [{1}]", title, formatArgs(afterMArgs, evaluationContext, log));
-                if (mLog.isDebug()) log.debug(afterMsg);
+                if (mLog.debug()) log.debug(afterMsg);
                 else log.info(afterMsg);
             }
         } catch (Exception e) {

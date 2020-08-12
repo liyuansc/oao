@@ -27,7 +27,7 @@ public class OaoUserController {
 
     @ApiOperation("获取当前用户信息")
     @GetMapping("/login_user")
-    @MLog(title = "获取当前登录用户", value = {@MArg(value = "#p0")})
+//    @MLog(title = "获取当前登录用户", value = {@MArg(value = "#p0")})
     public Result<OaoLoginUser> getLoginUser(@OaoLogin(isFull = true) OaoLoginUser oaoLoginUser) {
         return Result.success(oaoLoginUser);
     }

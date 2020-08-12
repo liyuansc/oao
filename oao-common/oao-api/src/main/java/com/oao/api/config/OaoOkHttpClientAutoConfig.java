@@ -19,7 +19,7 @@ public class OaoOkHttpClientAutoConfig {
     public OkHttpClient okHttpClient(SSLSocketFactory sslSocketFactory, X509TrustManager x509TrustManager, ConnectionPool connectionPool) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder
-//                .connectTimeout(20, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
 //                .readTimeout(65, TimeUnit.SECONDS)
 //                .writeTimeout(65, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
@@ -32,7 +32,7 @@ public class OaoOkHttpClientAutoConfig {
     @Bean
     @ConditionalOnMissingBean
     public ConnectionPool OkHttpClientConnectionPool() {
-        return new ConnectionPool(5, 5, TimeUnit.MINUTES);
+        return new ConnectionPool(200, 900, TimeUnit.SECONDS);
     }
 
     @Bean
