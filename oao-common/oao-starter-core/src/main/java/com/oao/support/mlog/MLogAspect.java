@@ -20,10 +20,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -58,7 +55,7 @@ public class MLogAspect {
         IntStream.range(0, args.length).forEach(i -> evaluationContext.setVariable("p" + i, args[i]));
         //打印方法参数
         Map<Boolean, List<MArg>> isBeforeMArgs = mArgs.stream().collect(Collectors.groupingBy(mArg -> !(mArg.value().indexOf("#result") != -1)));
-        List<MArg> beforeMArgs = isBeforeMArgs.getOrDefault(true, new ArrayList<>());
+        List<MArg> beforeMArgs = isBeforeMArgs.getOrDefault(true, Collections.emptyList());
         if (beforeMArgs.size() > 0) {
             String beforeMsg = MessageFormat.format("{0}-before: [{1}]", title, beforeMArgs.stream()
                     .map(mArg -> Stream.of(mArg.key(), expression2Value(mArg.value(), evaluationContext, log)).collect(Collectors.joining("=")))
