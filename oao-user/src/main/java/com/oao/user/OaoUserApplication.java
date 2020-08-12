@@ -1,13 +1,15 @@
 package com.oao.user;
 
-import com.oao.common.constant.CurrentApp;
 import com.oao.common.constant.App;
+import com.oao.common.constant.CurrentApp;
+import com.oao.support.mlog.EnableMLog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableMLog
 public class OaoUserApplication {
 
     static {

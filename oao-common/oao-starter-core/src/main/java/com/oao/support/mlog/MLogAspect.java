@@ -23,7 +23,6 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * 系统日志切面
@@ -33,6 +32,7 @@ import java.util.stream.Stream;
  */
 @Aspect
 public class MLogAspect {
+    public final static String P = "p";
 
 
     @Pointcut("@annotation(com.oao.support.mlog.MLog)")
@@ -52,14 +52,12 @@ public class MLogAspect {
         List<MArg> mArgs = Arrays.stream(mLog.value()).collect(Collectors.toList());
         StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
         if (args.length == 1) evaluationContext.setRootObject(args[0]);
-        IntStream.range(0, args.length).forEach(i -> evaluationContext.setVariable("p" + i, args[i]));
+        IntStream.range(0, args.length).forEach(i -> evaluationContext.setVariable(P + i, args[i]));
         //打印方法参数
         Map<Boolean, List<MArg>> isBeforeMArgs = mArgs.stream().collect(Collectors.groupingBy(mArg -> !(mArg.value().indexOf("#result") != -1)));
         List<MArg> beforeMArgs = isBeforeMArgs.getOrDefault(true, Collections.emptyList());
         if (beforeMArgs.size() > 0) {
-            String beforeMsg = MessageFormat.format("{0}-before: [{1}]", title, beforeMArgs.stream()
-                    .map(mArg -> Stream.of(mArg.key(), expression2Value(mArg.value(), evaluationContext, log)).collect(Collectors.joining("=")))
-                    .collect(Collectors.joining(", ")));
+            String beforeMsg = MessageFormat.format("{0}-before: [{1}]", title, formatArgs(beforeMArgs, evaluationContext, log));
             if (mLog.isDebug()) log.debug(beforeMsg);
             else log.info(beforeMsg);
         }
@@ -70,9 +68,7 @@ public class MLogAspect {
             //打印返回值参数
             List<MArg> afterMArgs = isBeforeMArgs.getOrDefault(false, new ArrayList<>());
             if (afterMArgs.size() > 0) {
-                String afterMsg = MessageFormat.format("{0}-after: [{1}]", title, afterMArgs.stream()
-                        .map(mArg -> Stream.of(mArg.key(), expression2Value(mArg.value(), evaluationContext, log)).collect(Collectors.joining("=")))
-                        .collect(Collectors.joining(", ")));
+                String afterMsg = MessageFormat.format("{0}-after: [{1}]", title, formatArgs(afterMArgs, evaluationContext, log));
                 if (mLog.isDebug()) log.debug(afterMsg);
                 else log.info(afterMsg);
             }
@@ -83,6 +79,15 @@ public class MLogAspect {
             throw e;
         }
         return result;
+    }
+
+    private String formatArgs(List<MArg> mArgs, EvaluationContext evaluationContext, Log log) {
+        return IntStream.range(0, mArgs.size()).mapToObj(i -> {
+            MArg mArg = mArgs.get(i);
+            String key = mArg.key();
+            if (StringUtils.isBlank(key)) key = "a" + i;
+            return String.join("=", key, expression2Value(mArg.value(), evaluationContext, log));
+        }).collect(Collectors.joining(", "));
     }
 
     private String expression2Value(String str, EvaluationContext evaluationContext, Log log) {

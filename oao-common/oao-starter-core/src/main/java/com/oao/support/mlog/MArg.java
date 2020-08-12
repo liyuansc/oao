@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Inherited
 public @interface MArg {
-    String key();
+    String key() default "";
 
     String value();
 }
