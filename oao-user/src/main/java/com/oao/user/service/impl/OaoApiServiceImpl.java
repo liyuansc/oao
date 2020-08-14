@@ -1,6 +1,5 @@
 package com.oao.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oao.user.cache.unit.impl.FindAllApiUnit;
 import com.oao.user.dao.OaoApiDao;
@@ -47,20 +46,20 @@ public class OaoApiServiceImpl extends ServiceImpl<OaoApiDao, OaoApi> implements
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = FindAllApiUnit.NAME, allEntries = true)
-    public boolean grantByApi(String apiId, List<String> roleIds) {
+    public boolean grantByRole(String roleId, List<String> apiIds) {
         //删除之前的角色关联
-        oaoRoleApiService.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getApiId, apiId));
-        oaoRoleApiService.saveBatch(roleIds.stream().map(roleId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
+        oaoRoleApiService.removeByRoleId(roleId);
+        oaoRoleApiService.saveBatch(apiIds.stream().map(apiId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
         return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(cacheNames = FindAllApiUnit.NAME, allEntries = true)
-    public boolean grantByRole(String roleId, List<String> apiIds) {
+    public boolean grantByApi(String apiId, List<String> roleIds) {
         //删除之前的角色关联
-        oaoRoleApiService.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getRoleId, roleId));
-        oaoRoleApiService.saveBatch(apiIds.stream().map(apiId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
+        oaoRoleApiService.removeByApiId(apiId);
+        oaoRoleApiService.saveBatch(roleIds.stream().map(roleId -> new OaoRoleApi(roleId, apiId)).collect(Collectors.toList()));
         return true;
     }
 }

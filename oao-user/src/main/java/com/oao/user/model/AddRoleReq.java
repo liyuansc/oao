@@ -12,7 +12,6 @@ public class AddRoleReq extends OaoRole {
         return super.getCode();
     }
 
-
     @NotBlank
     @Override
     public String getName() {

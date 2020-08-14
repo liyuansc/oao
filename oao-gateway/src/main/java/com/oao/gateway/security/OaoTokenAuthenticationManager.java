@@ -9,6 +9,7 @@ import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.core.Authentication;
 import reactor.core.publisher.Mono;
 
+@Deprecated
 public class OaoTokenAuthenticationManager implements ReactiveAuthenticationManager {
     @Autowired
     private JwtTokenManage jwtTokenManage;

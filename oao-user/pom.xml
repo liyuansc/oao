@@ -23,6 +23,10 @@
     </dependency>
     <dependency>
       <groupId>com.liyu</groupId>
+      <artifactId>oao-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.liyu</groupId>
       <artifactId>oao-starter-web</artifactId>
     </dependency>
     <dependency>

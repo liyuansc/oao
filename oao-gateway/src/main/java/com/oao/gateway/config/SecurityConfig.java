@@ -5,7 +5,6 @@ import com.oao.gateway.security.OaoAuthenticationSuccessHandler;
 import com.oao.gateway.security.OaoAuthorizationManager;
 import com.oao.gateway.security.OaoOauth2AuthenticationManager;
 import com.oao.gateway.security.OaoTokenAuthenticationConverter;
-import com.oao.security.JwtTokenManage;
 import com.oao.security.OaoUserAuthenticationConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,11 +39,6 @@ public class SecurityConfig {
     @Bean
     public ReactiveAuthenticationManager authenticationManager() {
         return new OaoOauth2AuthenticationManager(tokenStore());
-    }
-
-    @Bean
-    public JwtTokenManage jwtTokenManage() {
-        return new JwtTokenManage();
     }
 
     @Bean

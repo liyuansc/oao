@@ -18,5 +18,10 @@ public class OaoUserRole extends SuperPo {
 
     private String userId;
 
-    private Long roleId;
+    private String roleId;
+
+    public OaoUserRole(String userId, String roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

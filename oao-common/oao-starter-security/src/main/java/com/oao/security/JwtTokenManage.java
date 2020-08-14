@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Date;
 
+@Deprecated
 public class JwtTokenManage {
     @Value("${oao.security.jwt.secret:Ac8qLchegKykg(32tu21y}")
     private String secret;

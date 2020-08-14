@@ -6,10 +6,8 @@ import com.oao.user.dao.OaoRoleApiDao;
 import com.oao.user.model.po.OaoRoleApi;
 import com.oao.user.service.IOaoRoleApiService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -25,5 +23,15 @@ public class OaoRoleApiServiceImpl extends ServiceImpl<OaoRoleApiDao, OaoRoleApi
     @Override
     public List<OaoRoleApi> findAll() {
         return super.list();
+    }
+
+    @Override
+    public boolean removeByRoleId(String roleId) {
+        return super.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getRoleId, roleId));
+    }
+
+    @Override
+    public boolean removeByApiId(String apiId) {
+        return super.remove(new QueryWrapper<OaoRoleApi>().lambda().eq(OaoRoleApi::getApiId, apiId));
     }
 }

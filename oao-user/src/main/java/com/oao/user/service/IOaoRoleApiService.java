@@ -16,4 +16,8 @@ import java.util.List;
 public interface IOaoRoleApiService extends IService<OaoRoleApi> {
 
     List<OaoRoleApi> findAll();
+
+    boolean removeByRoleId(String roleId);
+
+    boolean removeByApiId(String apiId);
 }

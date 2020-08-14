@@ -1,6 +1,6 @@
 package com.oao.uaa.config;
 
-import com.oao.security.JwtTokenManage;
+import com.oao.security.OaoPasswordEncoder;
 import com.oao.uaa.security.OaoAccessDeniedHandler;
 import com.oao.uaa.security.OaoAuthenticationEntryPoint;
 import com.oao.uaa.security.OaoUserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsUtils;
 
@@ -25,11 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private OaoUserDetailsService userDetailsService;
 
     @Bean
-    public JwtTokenManage jwtTokenManage() {
-        return new JwtTokenManage();
-    }
-
-    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -37,8 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //TODO 测试用
-        return NoOpPasswordEncoder.getInstance();
+        return new OaoPasswordEncoder();
     }
 
     @Override
@@ -48,21 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
         http
                 .csrf().disable()
-
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//
-//                .and()
-//                .formLogin().permitAll()
-//
-//                .and()
-//                .logout().permitAll()
-
-//                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().permitAll()
