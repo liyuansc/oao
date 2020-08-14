@@ -6,8 +6,10 @@
       r.*
     FROM
       oao_role r
-      INNER JOIN oao_user_role ur ON r.id = ur.role_id
-      AND ur.user_id = #{userId}
+      INNER JOIN oao_user_role ur
+      ON ur.user_id = #{userId}
+      AND r.id = ur.role_id
+      AND ur.del = 0
       AND r.del = 0
   </select>
 </mapper>

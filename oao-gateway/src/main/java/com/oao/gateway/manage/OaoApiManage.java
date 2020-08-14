@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class OaoApiManage {
+public class    OaoApiManage {
     @Autowired
     private UserClient userClient;
 
