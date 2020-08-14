@@ -16,17 +16,19 @@ import java.util.List;
  * @since 2020-06-23
  */
 public interface IOaoUserService extends IService<OaoUser> {
-    OaoUser findByUsername(String username);
-
     List<OaoUser> findListByMobile(String mobile);
 
     List<OaoUser> findListByUsername(String username);
 
-    OaoLoginUser findLoginUserByUsername(String username);
+    OaoUser findById(String userId);
+
+    OaoLoginUser findLoginUser(String userId);
+
+    OaoLoginUser findLoginUserByUsername(String userId);
 
     List<OaoRole> findRolesByUserId(String userId);
 
     boolean grant(String userId, List<String> roleIds);
 
-    boolean saveUser(OaoUser oaoUser);
+    OaoUser saveUser(OaoUser oaoUser);
 }

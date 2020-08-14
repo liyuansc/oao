@@ -1,11 +1,11 @@
-package com.oao.support.mlog;
+package com.oao.common.support.mlog;
 
 /**
  * Created by liyu on 2017/8/1
  */
 
 import com.alibaba.fastjson.JSON;
-import com.oao.util.AopUtils;
+import com.oao.common.util.AopUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +35,7 @@ public class MLogAspect {
     public final static String P = "p";
 
 
-    @Pointcut("@annotation(com.oao.support.mlog.MLog)")
+    @Pointcut("@annotation(com.oao.common.support.mlog.MLog)")
     private void pointCut() {
     }//定义一个切入点
 

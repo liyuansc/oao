@@ -1,4 +1,4 @@
-package com.oao.util;
+package com.oao.common.util;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;

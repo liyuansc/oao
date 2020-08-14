@@ -5,7 +5,6 @@ import com.oao.common.model.Result;
 import com.oao.user.feign.UserClient;
 import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoApi;
-import com.oao.user.model.po.OaoUser;
 import com.oao.user.service.IOaoApiService;
 import com.oao.user.service.IOaoUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +25,14 @@ public class OaoUserClientImpl implements UserClient {
 
     @Override
     @GetMapping("/user/username/{username}")
-    public Result<OaoUser> findByUsername(@PathVariable String username) {
-        return Result.success(oaoUserService.findByUsername(username));
+    public Result<OaoLoginUser> findLoginUserByUsername(@PathVariable String username) {
+        return Result.success(oaoUserService.findLoginUserByUsername(username));
     }
 
     @Override
-    @GetMapping("/login_user/username/{username}")
-    public Result<OaoLoginUser> findLoginUserByUsername(@PathVariable String username) {
-        return Result.success(oaoUserService.findLoginUserByUsername(username));
+    @GetMapping("/login_user/id/{userId}")
+    public Result<OaoLoginUser> findLoginUser(@PathVariable String userId) {
+        return Result.success(oaoUserService.findLoginUser(userId));
     }
 
     @Override

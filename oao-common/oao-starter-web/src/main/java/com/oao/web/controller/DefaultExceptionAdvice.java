@@ -6,6 +6,7 @@ import com.oao.common.exception.ResultException;
 import com.oao.common.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -78,7 +79,7 @@ public class DefaultExceptionAdvice {
             DatabaseException.class,
             SQLException.class,
             PersistenceException.class,
-//            DataAccessException.class
+            DataAccessException.class
     })
     public Result database(Exception e) {
         log.error(e.getMessage(), e);

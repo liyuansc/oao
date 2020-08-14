@@ -1,11 +1,13 @@
 package com.oao.web.support;
 
 import com.oao.api.annotation.OaoLogin;
-import com.oao.user.model.OaoLoginUser;
 import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.user.feign.UserClient;
+import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoRole;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
@@ -25,11 +27,10 @@ import java.util.stream.Collectors;
  * @author zlt
  * @date 2018/12/21
  */
+@Data
+@NoArgsConstructor
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
     private UserClient userClient;
-
-    public LoginArgumentResolver() {
-    }
 
     public LoginArgumentResolver(UserClient userClient) {
         this.userClient = userClient;
@@ -64,15 +65,15 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         boolean isFull = oaoLogin.isFull();
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         String username = request.getHeader(OaoSecurityConstant.HttpHeader.I_USERNAME);
-        OaoLoginUser oaoLoginUser = new OaoLoginUser();
+        OaoLoginUser loginUser = new OaoLoginUser();
         if (StringUtils.isEmpty(username)) {
-            oaoLoginUser.setLogin(false);
+            loginUser.setLogin(false);
         } else {
             String userId = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER_ID);
             String clientId = request.getHeader(OaoSecurityConstant.HttpHeader.I_CLIENT_ID);
             if (isFull && userClient != null) {
-                OaoLoginUser full = userClient.findLoginUserByUsername(username).check().getData();
-                BeanUtils.copyProperties(full, oaoLoginUser);
+                OaoLoginUser full = userClient.findLoginUser(userId).check().getData();
+                BeanUtils.copyProperties(full, loginUser);
             } else {
                 String authorities = request.getHeader(OaoSecurityConstant.HttpHeader.I_AUTHORITIES);
                 List<OaoRole> roles = Arrays.stream(authorities.split(",")).map(a -> {
@@ -82,21 +83,14 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
                     role.setCode(authority.getCode());
                     return role;
                 }).collect(Collectors.toList());
-                oaoLoginUser.setRoles(roles);
+                loginUser.setRoles(roles);
             }
-            oaoLoginUser.setLogin(true);
-            oaoLoginUser.setId(userId);
-            oaoLoginUser.setUsername(username);
-            oaoLoginUser.setClientId(clientId);
+            loginUser.setLogin(true);
+            loginUser.setId(userId);
+            loginUser.setUsername(username);
+            loginUser.setClientId(clientId);
+            loginUser.setPassword(null);
         }
-        return oaoLoginUser;
-    }
-
-    public UserClient getUserClient() {
-        return userClient;
-    }
-
-    public void setUserClient(UserClient userClient) {
-        this.userClient = userClient;
+        return loginUser;
     }
 }

@@ -1,4 +1,4 @@
-package com.oao.web.util;
+package com.oao.common.util;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

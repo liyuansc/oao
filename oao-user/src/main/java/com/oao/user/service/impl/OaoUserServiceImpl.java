@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oao.common.constant.ResultCode;
 import com.oao.common.exception.ResultException;
 import com.oao.user.cache.unit.impl.FindRoleByUserIdUnit;
-import com.oao.user.cache.unit.impl.FindUserByUserNameUnit;
+import com.oao.user.cache.unit.impl.FindUserByIdUnit;
 import com.oao.user.dao.OaoUserDao;
 import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoRole;
@@ -45,10 +45,9 @@ public class OaoUserServiceImpl extends ServiceImpl<OaoUserDao, OaoUser> impleme
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    @Cacheable(cacheNames = FindUserByUserNameUnit.NAME, key = "#p0")
-    public OaoUser findByUsername(String username) {
-        return super.getOne(new QueryWrapper<OaoUser>().lambda().eq(OaoUser::getUsername, username));
+    @Cacheable(cacheNames = FindUserByIdUnit.NAME, key = "#p0")
+    public OaoUser findById(String userId) {
+        return super.getById(userId);
     }
 
     @Override
@@ -62,16 +61,25 @@ public class OaoUserServiceImpl extends ServiceImpl<OaoUserDao, OaoUser> impleme
     }
 
     @Override
-    public OaoLoginUser findLoginUserByUsername(String username) {
-        OaoUser user = userService.findByUsername(username);
+    public OaoLoginUser findLoginUser(String userId) {
+        OaoUser user = userService.findById(userId);
         if (user != null) {
-            List<OaoRole> roles = userService.findRolesByUserId(user.getId());
+            List<OaoRole> roles = userService.findRolesByUserId(userId);
             user.setRoles(roles);
             OaoLoginUser loginUser = new OaoLoginUser();
             BeanUtils.copyProperties(user, loginUser);
             return loginUser;
         }
         return null;
+    }
+
+    @Override
+    public OaoLoginUser findLoginUserByUsername(String username) {
+        OaoLoginUser loginUser = super.list(new QueryWrapper<OaoUser>().lambda().select(OaoUser::getId).eq(OaoUser::getUsername, username))
+                .stream()
+                .map(OaoUser::getId)
+                .map(userId -> userService.findLoginUser(userId)).findFirst().orElse(null);
+        return loginUser;
     }
 
     @Override
@@ -90,8 +98,8 @@ public class OaoUserServiceImpl extends ServiceImpl<OaoUserDao, OaoUser> impleme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveUser(OaoUser user) {
-        //不允许前端传id
+    @CacheEvict(cacheNames = FindUserByIdUnit.NAME, key = "#p0.id", condition = "#p0.id != null")
+    public OaoUser saveUser(OaoUser user) {
         boolean isUpdate = StringUtils.isNotBlank(user.getId());
         String username = user.getUsername();
         String mobile = user.getMobile();
@@ -121,6 +129,8 @@ public class OaoUserServiceImpl extends ServiceImpl<OaoUserDao, OaoUser> impleme
             //授权
             userService.grant(userId, roleIds);
         }
-        return true;
+        //遮蔽密码
+        user.setPassword(null);
+        return user;
     }
 }

@@ -1,4 +1,4 @@
-package com.oao.support.mlog;
+package com.oao.common.support.mlog;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

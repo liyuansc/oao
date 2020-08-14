@@ -6,7 +6,6 @@ import com.oao.common.exception.InternalApiException;
 import com.oao.common.model.Result;
 import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoApi;
-import com.oao.user.model.po.OaoUser;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,12 +24,12 @@ public class UserClientFallbackFactory implements FallbackFactory<UserClient> {
     public UserClient create(Throwable cause) {
         return new UserClient() {
             @Override
-            public Result<OaoUser> findByUsername(String username) {
+            public Result<OaoLoginUser> findLoginUserByUsername(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
 
             @Override
-            public Result<OaoLoginUser> findLoginUserByUsername(String username) {
+            public Result<OaoLoginUser> findLoginUser(String username) {
                 throw new InternalApiException(CLIENT_SERVICE_NAME, MSG, cause);
             }
 

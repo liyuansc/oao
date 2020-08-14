@@ -1,7 +1,7 @@
 package com.oao.db.support;
 
 import com.oao.common.constant.OaoSecurityConstant;
-import com.oao.web.util.RequestUtils;
+import com.oao.common.util.RequestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 

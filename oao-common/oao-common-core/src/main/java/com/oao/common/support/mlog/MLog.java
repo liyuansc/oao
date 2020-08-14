@@ -1,4 +1,4 @@
-package com.oao.support.mlog;
+package com.oao.common.support.mlog;
 
 import java.lang.annotation.*;
 
