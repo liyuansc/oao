@@ -3,8 +3,6 @@ package com.oao.user.controller;
 import com.oao.api.annotation.OaoLogin;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
-import com.oao.common.support.mlog.MArg;
-import com.oao.common.support.mlog.MLog;
 import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoUser;
 import com.oao.user.service.IOaoUserService;
@@ -25,14 +23,13 @@ public class OaoUserController {
 
     @ApiOperation("获取当前用户信息")
     @GetMapping("/login_user")
-    @MLog(title = "获取当前登录用户", value = {@MArg(value = "#p0")})
-    public Result<OaoLoginUser> getLoginUser(@OaoLogin(isFull = true) OaoLoginUser oaoLoginUser) {
-        return Result.success(oaoLoginUser);
+    public Result<OaoLoginUser> getLoginUser(@OaoLogin(isFull = true) OaoLoginUser loginUser) {
+        return Result.success(loginUser);
     }
 
     @ApiOperation("添加用户")
-    @PostMapping("add")
-    public Result<OaoUser> addUser(@Validated @RequestBody OaoUser user) {
+    @PostMapping("save")
+    public Result<OaoUser> saveUser(@Validated @RequestBody OaoUser user) {
         return Result.success(userService.saveUser(user));
     }
 }
