@@ -63,7 +63,9 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                             .getAuthorities()
                             .stream()
                             .map(authority -> OaoGrantedAuthority.parse(authority.getAuthority()))
-                            .anyMatch(authority -> roleApi.getRoleIds().contains(authority.getId()));
+                            .map(OaoGrantedAuthority::getId)
+                            .anyMatch(roleId -> roleApi.getRoleIds().contains(roleId)
+                                    || isSuperRole(roleId));
                 }
                 //认证资源
                 OaoApi authenticatedApi = findApi(apiMap.get(ApiConstant.AUTHENTICATED), uri, method, comparator);
@@ -97,5 +99,9 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
             }
         }
         return false;
+    }
+
+    private boolean isSuperRole(String roleId) {
+        return OaoSecurityConstant.SUPER_ROLE_ID.equals(roleId);
     }
 }
