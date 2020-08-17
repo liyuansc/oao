@@ -10,7 +10,7 @@
   <groupId>com.liyu</groupId>
   <artifactId>oao-user</artifactId>
   <version>0.1.0</version>
-  <description>用户</description>
+  <description>中心用户</description>
 
   <properties>
   </properties>

@@ -1,6 +1,6 @@
 package com.oao.user.controller;
 
-import com.oao.api.annotation.OaoLogin;
+import com.oao.user.annotation.OaoLogin;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
 import com.oao.user.model.OaoLoginUser;

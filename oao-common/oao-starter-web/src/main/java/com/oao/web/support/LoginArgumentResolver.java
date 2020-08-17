@@ -1,6 +1,6 @@
 package com.oao.web.support;
 
-import com.oao.api.annotation.OaoLogin;
+import com.oao.user.annotation.OaoLogin;
 import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.model.OaoGrantedAuthority;
 import com.oao.user.feign.UserClient;

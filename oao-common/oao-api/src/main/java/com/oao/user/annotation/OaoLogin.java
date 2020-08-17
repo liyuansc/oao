@@ -1,4 +1,4 @@
-package com.oao.api.annotation;
+package com.oao.user.annotation;
 
 import java.lang.annotation.*;
 
