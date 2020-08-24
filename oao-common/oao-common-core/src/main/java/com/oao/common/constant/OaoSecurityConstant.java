@@ -14,9 +14,6 @@ public class OaoSecurityConstant {
         public final static String I_USER = I + "USER";
 
         public final static String I_USERNAME = I + "USERNAME";
-        public final static String I_USER_ID = I + "USER-ID";
-        public final static String I_AUTHORITIES = I + "AUTHORITIES";
-        public final static String I_CLIENT_ID = I + "I-CLIENT-ID";
     }
 
     public static class QueryParam {

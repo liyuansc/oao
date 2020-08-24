@@ -2,6 +2,8 @@ package com.oao.db.support;
 
 import com.oao.common.constant.OaoSecurityConstant;
 import com.oao.common.util.RequestUtils;
+import com.oao.user.model.OaoLoginUser;
+import com.oao.user.support.LoginArgumentResolver;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserMetaObjectHandler extends DateMetaObjectHandler {
     private final static String CREATE_USER = "createUser";
     private final static String UPDATE_USER = "updateUser";
+    private LoginArgumentResolver loginArgumentResolver = new LoginArgumentResolver();
 
     /**
      * 插入填充，字段为空自动填充
@@ -19,7 +22,9 @@ public class UserMetaObjectHandler extends DateMetaObjectHandler {
         super.insertFill(metaObject);
         HttpServletRequest request = RequestUtils.getRequest();
         if (request == null) return;
-        String username = request.getHeader(OaoSecurityConstant.HttpHeader.I_USERNAME);
+        OaoLoginUser user = loginArgumentResolver.getUser(request, false);
+        if (user == null || user.isLogin() == false) return;
+        String username = user.getUsername();
         if (StringUtils.isBlank(username)) return;
         Object createUser = getFieldValByName(CREATE_USER, metaObject);
         Object updateUser = getFieldValByName(UPDATE_USER, metaObject);

@@ -1,4 +1,4 @@
-package com.oao.web.support;
+package com.oao.user.support;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -62,8 +62,12 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
         OaoLogin oaoLogin = methodParameter.getParameterAnnotation(OaoLogin.class);
         boolean isFull = oaoLogin.isFull();
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        String iUser = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER);
+        return this.getUser(request, isFull);
+    }
+
+    public OaoLoginUser getUser(HttpServletRequest request, boolean isFull) {
         OaoLoginUser loginUser;
+        String iUser = request.getHeader(OaoSecurityConstant.HttpHeader.I_USER);
         if (StringUtils.isEmpty(iUser)) {
             loginUser = new OaoLoginUser();
             loginUser.setLogin(false);

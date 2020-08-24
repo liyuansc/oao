@@ -3,7 +3,7 @@ package com.oao.web.config;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.oao.user.feign.UserClient;
-import com.oao.web.support.LoginArgumentResolver;
+import com.oao.user.support.LoginArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
