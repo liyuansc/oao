@@ -1,8 +1,8 @@
 package com.oao.user.controller;
 
-import com.oao.user.annotation.OaoLogin;
 import com.oao.common.constant.Route;
 import com.oao.common.model.Result;
+import com.oao.user.annotation.OaoLogin;
 import com.oao.user.model.OaoLoginUser;
 import com.oao.user.model.po.OaoUser;
 import com.oao.user.service.IOaoUserService;

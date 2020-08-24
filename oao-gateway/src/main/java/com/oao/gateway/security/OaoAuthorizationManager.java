@@ -45,7 +45,7 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
     public Mono<Boolean> isGranted(ServerHttpRequest request, Authentication authentication) {
         //超级管理员直接放行
         if (isSuperAdmin(authentication)) {
-//            return Mono.just(true);
+            return Mono.just(true);
         }
         String uri = request.getURI().getPath();
         HttpMethod method = request.getMethod();
@@ -65,6 +65,7 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
                             .map(authority -> OaoGrantedAuthority.parse(authority.getAuthority()))
                             .map(OaoGrantedAuthority::getId)
                             .anyMatch(roleId -> roleApi.getRoleIds().contains(roleId)
+                                    //超级角色放行
                                     || isSuperRole(roleId));
                 }
                 //认证资源
@@ -103,5 +104,15 @@ public class OaoAuthorizationManager implements ReactiveAuthorizationManager<Aut
 
     private boolean isSuperRole(String roleId) {
         return OaoSecurityConstant.SUPER_ROLE_ID.equals(roleId);
+    }
+
+    public static void main(String[] args) {
+
+
+//        Object d = Mono
+//                .justOrEmpty(null)
+//                .handle(o->)
+//
+//        System.out.println(d);
     }
 }
