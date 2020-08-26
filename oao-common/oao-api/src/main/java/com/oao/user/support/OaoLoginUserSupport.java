@@ -9,6 +9,7 @@ import com.oao.user.model.OaoLoginUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Data
 @NoArgsConstructor
 public class OaoLoginUserSupport {
+    @Autowired(required = false)
     private UserClient userClient;
 
     public OaoLoginUserSupport(UserClient userClient) {

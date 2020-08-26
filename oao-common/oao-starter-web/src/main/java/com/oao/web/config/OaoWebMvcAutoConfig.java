@@ -2,7 +2,6 @@ package com.oao.web.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.oao.user.feign.UserClient;
 import com.oao.user.support.OaoLoginUserSupport;
 import com.oao.web.support.LoginArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OaoWebMvcAutoConfig implements WebMvcConfigurer {
-    @Autowired(required = false)
-    private UserClient userClient;
     @Autowired
     private LoginArgumentResolver loginArgumentResolver;
 
     @Bean
     @ConditionalOnMissingBean
     public OaoLoginUserSupport loginUserSupport() {
-        return new OaoLoginUserSupport(userClient);
+        return new OaoLoginUserSupport();
     }
 
     @Bean
