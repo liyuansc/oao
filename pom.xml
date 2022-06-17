@@ -27,7 +27,7 @@
     <velocity.version>2.2</velocity.version>
     <freemarker.version>2.3.29</freemarker.version>
     <jjwt.version>0.9.1</jjwt.version>
-    <fastjson.verison>1.2.70</fastjson.verison>
+    <fastjson.verison>1.2.83</fastjson.verison>
     <lombok.verison>1.18.12</lombok.verison>
   </properties>
 
